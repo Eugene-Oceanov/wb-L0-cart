@@ -1,0 +1,95 @@
+@font-face {
+  font-family: "Segoe UI", serif;
+  src: url("../fonts/SegoeUI.ttf");
+  font-weight: normal;
+}
+*,
+html,
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI";
+  font-size: calc(1vw + 1vh);
+}
+
+body {
+  min-height: 100vh;
+  background-color: #6725A8;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.container {
+  width: 100%;
+  padding: 0 1.1em;
+}
+
+.d-flex {
+  display: flex;
+}
+
+.jc-space-between {
+  justify-content: space-between;
+}
+
+.jc-center {
+  justify-content: center;
+}
+
+.ai-center {
+  align-items: center;
+}
+
+#header {
+  color: #fff;
+  margin: 0.9em 0;
+}
+#header .header__logo {
+  width: 5.5em;
+  margin-left: 3.1em;
+  margin-right: 0.5em;
+}
+#header .header__logo--text {
+  text-transform: uppercase;
+  line-height: 1.1em;
+  letter-spacing: 0.11em;
+  font-weight: 600;
+}
+#header .header__search {
+  width: 71.8%;
+  position: relative;
+}
+#header .header__search--input {
+  width: 100%;
+  padding: 0.75em 1.3em;
+  color: #fff;
+  font-size: 0.8em;
+  line-height: 0.5em;
+  border-radius: 10em;
+  border: none;
+  outline: none;
+  margin-right: -2em;
+  background: rgba(255, 255, 255, 0.5);
+  transition: all 0.3s ease;
+}
+#header .header__search--input::-moz-placeholder {
+  color: #ccc;
+}
+#header .header__search--input::placeholder {
+  color: #ccc;
+}
+#header .header__search--input:focus {
+  color: #000;
+  opacity: 1;
+  background: #fff;
+}
+#header .header__search--icon {
+  position: absolute;
+  top: 0.5em;
+  right: 1em;
+  fill: #fff;
+}/*# sourceMappingURL=style.css.map */
