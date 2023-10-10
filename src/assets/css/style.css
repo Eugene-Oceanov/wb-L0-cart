@@ -1,8 +1,8 @@
 /* variables start */
 :root {
+  --index: calc(1vw + 1vh);
   --system-black: #000;
   --system-white: #fff;
-  --index: calc(1vw + 1vh);
   --system-violet: #6725A8;
   --system-magenta: #CB11AB;
   --main-background-smoky: #F6F6FA;
@@ -12,7 +12,7 @@
 
 /* fonts start */
 @font-face {
-  font-family: "Segoe UI", serif;
+  font-family: "Segoe UI";
   src: url("../fonts/SegoeUI.ttf");
   font-weight: normal;
 }
@@ -26,7 +26,7 @@ body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Segoe UI";
+  font-family: "Segoe UI", Arial, Helvetica, sans-serif;
   font-size: var(--index);
   line-height: var(--index);
 }
@@ -49,6 +49,14 @@ a {
   padding: 0 1.1em;
 }
 
+.d-none {
+  display: none;
+}
+
+.d-block {
+  display: block;
+}
+
 .d-flex {
   display: flex;
 }
@@ -69,6 +77,78 @@ a {
   flex-direction: column;
 }
 
+/* custom checkbox start */
+input[type="checkbox"]:checked,
+input[type="checkbox"]:not(:checked) {
+  position: absolute;
+  left: -9999px;
+}
+
+input[type="checkbox"]:checked+label,
+input[type="checkbox"]:not(:checked)+label {
+  display: inline-block;
+  position: relative;
+  padding-left: 28px;
+  line-height: 20px;
+  cursor: pointer;
+}
+
+input[type="checkbox"]:checked+label:before,
+input[type="checkbox"]:not(:checked)+label:before {
+  content: "";
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  width: 18px;
+  height: 18px;
+  border: 1px solid #ccc;
+  transition: .2s ease;
+}
+
+input[type="checkbox"]:checked+label:before {
+  background-color: #CB11AB;
+}
+
+input[type="checkbox"]:checked+label:before,
+input[type="checkbox"]:not(:checked)+label:before {
+  border-radius: 5px;
+}
+
+input[type="checkbox"]:checked+label:after,
+input[type="checkbox"]:not(:checked)+label:after {
+  content: "";
+  position: absolute;
+  -webkit-transition: all 0.2s ease;
+  -moz-transition: all 0.2s ease;
+  -o-transition: all 0.2s ease;
+  transition: all 0.2s ease;
+}
+
+input[type="checkbox"]:checked+label:after,
+input[type="checkbox"]:not(:checked)+label:after {
+  left: 3px;
+  top: 4px;
+  width: 10px;
+  height: 5px;
+  border-radius: 1px;
+  border-left: 4px solid #fff;
+  border-bottom: 4px solid #fff;
+  -webkit-transform: rotate(-45deg);
+  -moz-transform: rotate(-45deg);
+  -o-transform: rotate(-45deg);
+  -ms-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+}
+
+input[type="checkbox"]:not(:checked)+label:after {
+  opacity: 0;
+}
+
+input[type="checkbox"]:checked+label:after {
+  opacity: 1;
+}
+
+/* custom checkbox end */
 /* default end */
 
 /* header start */
@@ -86,7 +166,7 @@ a {
 .header__logo--text {
   text-transform: uppercase;
   line-height: 1.1em;
-  letter-spacing: 0.11em;
+  letter-spacing: 0.13em;
   font-weight: 600;
 }
 
