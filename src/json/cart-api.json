@@ -1,0 +1,13 @@
+[
+    {
+        "id": 1,
+        "title": "Футболка UZcotton мужская",
+        "color": "Белый",
+        "size": 44,
+        "quantity": 3,
+        "price": 522,
+        "discount": 500,
+        "img": "./assets/img/",
+        "manufacturer": "ООО Вайлдберриз"
+    }
+]

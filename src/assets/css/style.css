@@ -1,8 +1,25 @@
+/* variables start */
+:root {
+  --system-black: #000;
+  --system-white: #fff;
+  --index: calc(1vw + 1vh);
+  --system-violet: #6725A8;
+  --system-magenta: #CB11AB;
+  --main-background-smoky: #F6F6FA;
+}
+
+/* variables end */
+
+/* fonts start */
 @font-face {
   font-family: "Segoe UI", serif;
   src: url("../fonts/SegoeUI.ttf");
   font-weight: normal;
 }
+
+/* fonts end */
+
+/* reset start */
 *,
 html,
 body {
@@ -10,7 +27,8 @@ body {
   padding: 0;
   box-sizing: border-box;
   font-family: "Segoe UI";
-  font-size: calc(1vw + 1vh);
+  font-size: var(--index);
+  line-height: var(--index);
 }
 
 body {
@@ -23,6 +41,9 @@ a {
   color: inherit;
 }
 
+/* reset end */
+
+/* default start */
 .container {
   width: 100%;
   padding: 0 1.1em;
@@ -44,26 +65,38 @@ a {
   align-items: center;
 }
 
+.fd-column {
+  flex-direction: column;
+}
+
+/* default end */
+
+/* header start */
 #header {
   color: #fff;
-  margin: 0.9em 0;
+  margin: 0.85em 0;
 }
-#header .header__logo {
+
+.header__logo {
   width: 5.5em;
   margin-left: 3.1em;
   margin-right: 0.5em;
 }
-#header .header__logo--text {
+
+.header__logo--text {
   text-transform: uppercase;
   line-height: 1.1em;
   letter-spacing: 0.11em;
   font-weight: 600;
 }
-#header .header__search {
-  width: 71.8%;
+
+.header__search {
+  width: 71.75%;
+  margin-right: 1em;
   position: relative;
 }
-#header .header__search--input {
+
+.header__search--input {
   width: 100%;
   padding: 0.75em 1.3em;
   color: #fff;
@@ -76,20 +109,52 @@ a {
   background: rgba(255, 255, 255, 0.5);
   transition: all 0.3s ease;
 }
-#header .header__search--input::-moz-placeholder {
+
+.header__search--input::-moz-placeholder {
   color: #ccc;
 }
-#header .header__search--input::placeholder {
+
+.header__search--input::placeholder {
   color: #ccc;
 }
-#header .header__search--input:focus {
+
+.header__search--input:focus {
   color: #000;
   opacity: 1;
   background: #fff;
 }
-#header .header__search--icon {
+
+.header__search--icon {
   position: absolute;
   top: 0.5em;
   right: 1em;
   fill: #fff;
-}/*# sourceMappingURL=style.css.map */
+}
+
+.header__nav--item {
+  text-align: center;
+
+}
+
+.header__nav--item p {
+  font-size: 0.7em;
+}
+
+.header__nav--item+.header__nav--item {
+  margin-left: 1.5em;
+}
+
+.header__nav--cart-link {
+  position: relative;
+}
+
+/* header end */
+
+/* main start */
+#main {
+  background: var(--system-white);
+  border-radius: 1.1em;
+  padding: 1.5em;
+}
+
+/* main end */
