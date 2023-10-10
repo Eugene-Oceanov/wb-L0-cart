@@ -7,7 +7,7 @@
         "quantity": 3,
         "price": 1051,
         "discount": 50,
-        "img": "./img/t-shirt.png",
+        "img": "https://raw.githubusercontent.com/Eugene-Oceanov/wb-L0-cart/main/src/json/img/t-shirt.png",
         "stock": "Коледино WB",
         "manufacturer": "ООО Вайлдберриз",
         "delivery-date": "5-6 февраля"
@@ -20,7 +20,7 @@
         "quantity": 205,
         "price": 11500.24,
         "discount": 8.7,
-        "img": "./img/iphone-case.png",
+        "img": "https://raw.githubusercontent.com/Eugene-Oceanov/wb-L0-cart/main/src/json/img/iphone-case.png",
         "stock": "Коледино WB",
         "manufacturer": "OOO Мегапрофстиль",
         "delivery-date": "5-6 февраля"
@@ -33,7 +33,7 @@
         "quantity": 3,
         "price": 475,
         "discount": 500,
-        "img": "./img/pensils.png",
+        "img": "https://raw.githubusercontent.com/Eugene-Oceanov/wb-L0-cart/main/src/json/img/pensils.png",
         "stock": "Коледино WB",
         "manufacturer": "ООО Вайлдберриз",
         "delivery-date": "5-6 февраля"
@@ -46,7 +46,7 @@
         "quantity": 0,
         "price": 1051,
         "discount": 50,
-        "img": "./img/t-shirt.png",
+        "img": "https://raw.githubusercontent.com/Eugene-Oceanov/wb-L0-cart/main/src/json/img/t-shirt.png",
         "stock": "Коледино WB",
         "manufacturer": "ООО Вайлдберриз",
         "delivery-date": "5-6 февраля"
@@ -59,7 +59,7 @@
         "quantity": 0,
         "price": 11500.24,
         "discount": 8.7,
-        "img": "./img/iphone-case.png",
+        "img": "https://raw.githubusercontent.com/Eugene-Oceanov/wb-L0-cart/main/src/json/img/iphone-case.png",
         "stock": "Коледино WB",
         "manufacturer": "OOO Мегапрофстиль",
         "delivery-date": "5-6 февраля"
@@ -72,7 +72,7 @@
         "quantity": 0,
         "price": 475,
         "discount": 500,
-        "img": "./img/pensils.png",
+        "img": "https://raw.githubusercontent.com/Eugene-Oceanov/wb-L0-cart/main/src/json/img/pensils.png",
         "stock": "Коледино WB",
         "manufacturer": "ООО Вайлдберриз",
         "delivery-date": "5-6 февраля"
