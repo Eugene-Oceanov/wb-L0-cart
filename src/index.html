@@ -72,11 +72,24 @@
     <!-- main start -->
     <main id="main">
         <div class="container d-flex jc-space-between">
-            <div class="basket-main">
-                <h1>Корзина</h1>
-                <div class="basket"></div>
+            <div class="cart-main">
+                <h1 class="cart-main__title">Корзина</h1>
+                <div class="cart-aviable">
+                    <div class="cart-aviable__hide-block d-flex ai-center">
+                        <input type="checkbox" id="cart-aviable__choose-all-input">
+                        <label for="cart-aviable__choose-all-input">
+                        </label>
+
+                    </div>
+                    <div class="cart-aviable__container"></div>
+                    <div class="cart-aviable__hidden-summary"></div>
+                </div>
+
+                <div class="cart-not-aviable">
+                    <div class="cart-aviable__hide-block d-flex ai-center"></div>
+                </div>
             </div>
-            <div class="basket-sidebar"></div>
+            <div class="cart-sidebar"></div>
         </div>
     </main>
     <!-- main end -->

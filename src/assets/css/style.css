@@ -29,6 +29,7 @@ body {
   font-family: "Segoe UI", Arial, Helvetica, sans-serif;
   font-size: var(--index);
   line-height: var(--index);
+  letter-spacing: -.4px;
 }
 
 body {
@@ -80,59 +81,37 @@ a {
 /* custom checkbox start */
 input[type="checkbox"]:checked,
 input[type="checkbox"]:not(:checked) {
-  position: absolute;
-  left: -9999px;
+  display: none;
 }
 
-input[type="checkbox"]:checked+label,
-input[type="checkbox"]:not(:checked)+label {
-  display: inline-block;
+label {
+  display: block;
   position: relative;
-  padding-left: 28px;
-  line-height: 20px;
+  width: 1.1em;
+  height: 1.1em;
+  border: 1px solid var(--system-magenta);
+  border-radius: .3em;
   cursor: pointer;
 }
 
-input[type="checkbox"]:checked+label:before,
-input[type="checkbox"]:not(:checked)+label:before {
-  content: "";
-  position: absolute;
-  left: 0px;
-  top: 0px;
-  width: 18px;
-  height: 18px;
-  border: 1px solid #ccc;
-  transition: .2s ease;
+input[type="checkbox"]:checked+label {
+  background: var(--system-magenta);
 }
 
-input[type="checkbox"]:checked+label:before {
-  background-color: #CB11AB;
-}
-
-input[type="checkbox"]:checked+label:before,
-input[type="checkbox"]:not(:checked)+label:before {
-  border-radius: 5px;
-}
-
-input[type="checkbox"]:checked+label:after,
-input[type="checkbox"]:not(:checked)+label:after {
+input[type="checkbox"]:checked+label:after {
   content: "";
   position: absolute;
   -webkit-transition: all 0.2s ease;
   -moz-transition: all 0.2s ease;
   -o-transition: all 0.2s ease;
   transition: all 0.2s ease;
-}
-
-input[type="checkbox"]:checked+label:after,
-input[type="checkbox"]:not(:checked)+label:after {
-  left: 3px;
-  top: 4px;
+  left: .25em;
+  top: .25em;
   width: 10px;
   height: 5px;
   border-radius: 1px;
-  border-left: 4px solid #fff;
-  border-bottom: 4px solid #fff;
+  border-left: .14em solid #fff;
+  border-bottom: .14em solid #fff;
   -webkit-transform: rotate(-45deg);
   -moz-transform: rotate(-45deg);
   -o-transform: rotate(-45deg);
@@ -234,7 +213,80 @@ input[type="checkbox"]:checked+label:after {
 #main {
   background: var(--system-white);
   border-radius: 1.1em;
-  padding: 1.5em;
+  padding: 1.5em 0;
 }
+
+.cart-main {
+  width: 66%;
+  padding: .5em 0;
+}
+
+.cart-main__title {
+  font-size: 1.32em;
+  margin-bottom: .5em;
+}
+
+.cart-aviable__hide-block {
+  padding: .9em 0;
+  border-bottom: 2px solid var(--main-background-smoky);
+  margin-bottom: .4em;
+}
+
+
+/* cart item start */
+.cart-item {}
+
+.cart-item__checkbox {
+  display: block;
+  margin-top: 1.8em;
+}
+
+.cart-item+.cart-item {
+  margin-top: 1.3em;
+}
+
+.cart-item-wrapper {
+  width: 100%;
+  margin-left: .6em;
+}
+
+.cart-item-info__img {
+  max-width: 3.45em;
+  max-height: auto;
+}
+
+.cart-item-info {
+  width: 100%;
+}
+
+.cart-item-info__description {
+  width: 40%;
+  margin-left: 0.75em;
+  padding: 0.15em 0;
+}
+
+.cart-item__title {
+  font-size: 0.8em;
+  font-weight: 400;
+  letter-spacing: -.4px;
+  line-height: 1.45em;
+  margin-bottom: .3em;
+}
+
+.cart-item-info__description p {
+  font-size: 0.65em;
+}
+
+.cart-item-properties__item+.cart-item-properties__item {
+  margin-left: 1.3em;
+}
+
+.cart-item__stock,
+.cart-item__manufacturer {
+  color: #9797af;
+}
+
+/* cart item end */
+
 
 /* main end */
