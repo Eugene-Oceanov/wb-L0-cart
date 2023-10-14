@@ -2,7 +2,7 @@
     {
         "id": 1,
         "title": "Футболка UZcotton мужская",
-        "color": "Белый",
+        "color": "белый",
         "size": 44,
         "quantity": 1,
         "remainder": 2,
@@ -16,7 +16,7 @@
     {
         "id": 2,
         "title": "Силиконовый чехол картхолдер (отверстия) для карт, прозрачный кейс бампер на Apple iPhone XR, MobiSafe",
-        "color": "Прозрачный",
+        "color": "прозрачный",
         "size": "",
         "quantity": 200,
         "remainder": 200,
@@ -44,7 +44,7 @@
     {
         "id": 4,
         "title": "Футболка UZcotton мужская",
-        "color": "Белый",
+        "color": "белый",
         "size": 44,
         "quantity": 0,
         "remainder": 0,
@@ -58,7 +58,7 @@
     {
         "id": 5,
         "title": "Силиконовый чехол картхолдер (отверстия) для карт, прозрачный кейс бампер на Apple iPhone XR, MobiSafe",
-        "color": "Прозрачный",
+        "color": "прозрачный",
         "size": "",
         "quantity": 0,
         "remainder": 0,
