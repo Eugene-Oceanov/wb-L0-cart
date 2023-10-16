@@ -4,7 +4,7 @@ module.exports = {
         const cartItem = document.createElement("DIV");
         cartItem.classList.add("cart-item", "d-flex");
         cartItem.innerHTML = `
-            <input type="checkbox" id="cart-item-${item.id}__cb">
+            <input type="checkbox" id="cart-item-${item.id}__cb" checked>
             <label for="cart-item-${item.id}__cb" class="cart-item__checkbox d-flex jc-space-between"></label>
             <div class="cart-item-wrapper d-flex">
                 <a href="#"><img src="${item.img}" alt="${item.title}" class="cart-item-info__img"></a>
@@ -18,10 +18,10 @@ module.exports = {
                         <p class="cart-item__stock">${item.stock}</p>
                         <p class="cart-item__manufacturer">${item.manufacturer}</p>
                     </div>
-                    <div class="cart-item-options d-flex">
+                    <div class="cart-item-options d-flex jc-space-between">
                         <div class="cart-item-options-panel">
                             <div class="cart-item-options-panel-quantity d-flex jc-space-between ai-center">
-                                <p class="cart-item-options-panel__quantity-lower">-</p>
+                                <p class="cart-item-options-panel__quantity-lower">−</p>
                                 <input type="text" class="cart-item-options-panel__quantity-input" value="${item.quantity}">
                                 <p class="cart-item-options-panel__quantity-increase">+</p>
                             </div>
