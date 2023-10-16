@@ -4,7 +4,7 @@ module.exports = {
         const cartItem = document.createElement("DIV");
         cartItem.classList.add("cart-item", "d-flex");
         cartItem.innerHTML = `
-            <input type="checkbox" id="cart-item-${item.id}__cb" checked>
+            <input type="checkbox" class="cartItemCheckbox" id="cart-item-${item.id}__cb" checked>
             <label for="cart-item-${item.id}__cb" class="cart-item__checkbox d-flex jc-space-between"></label>
             <div class="cart-item-wrapper d-flex">
                 <a href="#"><img src="${item.img}" alt="${item.title}" class="cart-item-info__img"></a>

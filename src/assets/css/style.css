@@ -236,6 +236,7 @@ input[type="checkbox"]:checked+label:after {
   background: var(--main-background-smoky);
   border-radius: 1.3em;
   padding: 1.3em 0;
+  padding-bottom: 1.55em;
 }
 
 .cart-main {
@@ -708,3 +709,15 @@ input[type="checkbox"]:checked+label:after {
 /* cart sidebar end */
 
 /* main end */
+
+/* footer start */
+#footer {
+  padding: 1.5em;
+}
+
+.footer__text {
+  font-size: 0.8em;
+  color: var(--system-white);
+}
+
+/* footer end */
