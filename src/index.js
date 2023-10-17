@@ -54,6 +54,12 @@ cart.then(data => {
                     getTotals(order.goods);
                 }
             })
+
+            cartItem.querySelector(".quantityLower").addEventListener("click", () => {
+                order.goods.indexOf(item).quantity--;
+                getTotals(order.goods);
+            })
+
             order.goods.push(item); // поскольку чекбоксы заранее в положении checked, сразу добавляем эти товары в заказ
         } else if (item.remainder === 0) { // отрисовываем верстку товаров корзины НЕ доступных к заказу
             const cartItemNotAviable = cartItemLayout.cartItemNotAviable(item);

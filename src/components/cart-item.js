@@ -21,9 +21,9 @@ module.exports = {
                     <div class="cart-item-options d-flex jc-space-between">
                         <div class="cart-item-options-panel">
                             <div class="cart-item-options-panel-quantity d-flex jc-space-between ai-center">
-                                <p class="cart-item-options-panel__quantity-lower">−</p>
-                                <input type="text" class="cart-item-options-panel__quantity-input" value="${item.quantity}">
-                                <p class="cart-item-options-panel__quantity-increase">+</p>
+                                <p class="cart-item-options-panel__quantity-lower quantityLower">−</p>
+                                <input type="text" class="cart-item-options-panel__quantity-input quantityInput" value="${item.quantity}">
+                                <p class="cart-item-options-panel__quantity-increase quantityIncrease">+</p>
                             </div>
                             ${item.remainder <= 3 ? `<p class="cart-item-options-panel__remainder">Осталось ${item.remainder} шт.</p>` : ""}
                             <div class="cart-item-options-panel__buttons d-flex jc-end">
