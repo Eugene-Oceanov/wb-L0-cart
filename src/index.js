@@ -26,14 +26,7 @@ const cart = getCartData(cartJSON);
 const user = getCartData(userJSON);
 
 const order = {
-    recipient: {
-        name: "",
-        surname: "",
-        eMail: "",
-        phone: "",
-        inn: "",
-        payInfo: []
-    },
+    recipient: {},
     point: "",
     goods: [],
 }
@@ -55,27 +48,10 @@ cart.then(data => {
             cartItemCheckbox.addEventListener("change", () => { // логика добавления товаров в заказ по нажатию на чекбоксы
                 if (cartItemCheckbox.checked) {
                     order.goods.push(item);
-                    order.goods.forEach(orderGood => {
-                        totalPriceSum += cartMath.getTotalPrice(orderGood.price, orderGood.discount, orderGood.quantity);
-                        totalQuantitySum += orderGood.quantity;
-                        totalOriginalPrice += orderGood.price * orderGood.quantity;
-                        totalDiscountSum += cartMath.getDiscount(orderGood.price, orderGood.discount, orderGood.quantity);
-                    })
-                    totalPrice.textContent = totalPriceSum.toLocaleString("ru");
-                    goodsQuantity.textContent = `${totalQuantitySum.toLocaleString("ru")} товара`;
-                    originalPrice.textContent = totalOriginalPrice.toLocaleString("ru");
-                    totalDiscount.textContent = totalDiscountSum.toLocaleString("ru");
+                    getTotals(order.goods);
                 } else {
                     order.goods.splice(order.goods.indexOf(item), 1);
-                    order.goods.forEach(orderGood => {
-                        totalPriceSum += cartMath.getTotalPrice(orderGood.price, orderGood.discount, orderGood.quantity);
-                        totalQuantitySum += orderGood.quantity;
-                        totalOriginalPrice += orderGood.price * orderGood.quantity;
-                        totalDiscountSum += cartMath.getDiscount(orderGood.price, orderGood.discount, orderGood.quantity);
-                    })
-                    totalPrice.textContent = totalPriceSum.toLocaleString("ru");
-                    goodsQuantity.textContent = `${totalQuantitySum.toLocaleString("ru")} товара`;
-                    originalPrice.textContent = totalOriginalPrice.toLocaleString("ru");
+                    getTotals(order.goods);
                 }
             })
             order.goods.push(item); // поскольку чекбоксы заранее в положении checked, сразу добавляем эти товары в заказ
@@ -85,16 +61,7 @@ cart.then(data => {
         }
     })
 
-    order.goods.forEach(orderGood => {
-        totalPriceSum += cartMath.getTotalPrice(orderGood.price, orderGood.discount, orderGood.quantity);
-        totalQuantitySum += orderGood.quantity;
-        totalOriginalPrice += orderGood.price * orderGood.quantity;
-        totalDiscountSum += cartMath.getDiscount(orderGood.price, orderGood.discount, orderGood.quantity);
-    })
-    totalPrice.textContent = totalPriceSum.toLocaleString("ru");
-    goodsQuantity.textContent = `${totalQuantitySum.toLocaleString("ru")} товара`;
-    originalPrice.textContent = totalOriginalPrice.toLocaleString("ru");
-    totalDiscount.textContent = totalDiscountSum.toLocaleString("ru");
+    getTotals(order.goods);
 });
 
 user.then(data => {
@@ -111,6 +78,25 @@ user.then(data => {
     cartMainPointSchedule.textContent = order.point.schedule;
     sidebarPickupPoint.textContent = order.point.adress;
 })
+
+function getTotals (arr) {
+    totalPriceSum = 0;
+    totalQuantitySum = 0;
+    totalOriginalPrice = 0;
+    totalDiscountSum = 0;
+
+    arr.forEach(orderGood => {
+        totalPriceSum += cartMath.getTotalPrice(orderGood.price, orderGood.discount, orderGood.quantity);
+        totalQuantitySum += orderGood.quantity;
+        totalOriginalPrice += orderGood.price * orderGood.quantity;
+        totalDiscountSum += cartMath.getDiscount(orderGood.price, orderGood.discount, orderGood.quantity);
+    })
+
+    totalPrice.textContent = totalPriceSum.toLocaleString("ru");
+    goodsQuantity.textContent = `${totalQuantitySum.toLocaleString("ru")} товара`;
+    originalPrice.textContent = totalOriginalPrice.toLocaleString("ru");
+    totalDiscount.textContent = totalDiscountSum.toLocaleString("ru");
+}
 
 async function getCartData(url) {
     let json = await fetch(url);
