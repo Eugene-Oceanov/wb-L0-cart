@@ -69,4 +69,10 @@ module.exports = {
             </div>`;
         return cartItemNotAviable1;
     },
+
+    cartItemDeliveryDate: function(item) {
+        item.deliveryDate.forEach(dateItem => {
+            
+        })
+    }
 }

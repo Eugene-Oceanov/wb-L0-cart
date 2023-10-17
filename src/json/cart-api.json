@@ -11,7 +11,7 @@
         "img": "https://raw.githubusercontent.com/Eugene-Oceanov/wb-L0-cart/main/src/json/img/t-shirt.png",
         "stock": "Коледино WB",
         "manufacturer": "ООО Вайлдберриз",
-        "delivery-date": [
+        "deliveryDate": [
             {
                 "date": "5—6 февраля",
                 "quantity": 3
@@ -30,7 +30,7 @@
         "img": "https://raw.githubusercontent.com/Eugene-Oceanov/wb-L0-cart/main/src/json/img/iphone-case.png",
         "stock": "Коледино WB",
         "manufacturer": "OOO Мегапрофстиль",
-        "delivery-date": [
+        "deliveryDate": [
             {
                 "date": "5—6 февраля",
                 "quantity": 184
@@ -53,7 +53,7 @@
         "img": "https://raw.githubusercontent.com/Eugene-Oceanov/wb-L0-cart/main/src/json/img/pensils.png",
         "stock": "Коледино WB",
         "manufacturer": "ООО Вайлдберриз",
-        "delivery-date": [
+        "deliveryDate": [
             {
                 "date": "5—6 февраля",
                 "quantity": 4
@@ -72,7 +72,7 @@
         "img": "https://raw.githubusercontent.com/Eugene-Oceanov/wb-L0-cart/main/src/json/img/t-shirt.png",
         "stock": "Коледино WB",
         "manufacturer": "ООО Вайлдберриз",
-        "delivery-date": []
+        "deliveryDate": []
     },
     {
         "id": 5,
@@ -86,7 +86,7 @@
         "img": "https://raw.githubusercontent.com/Eugene-Oceanov/wb-L0-cart/main/src/json/img/iphone-case.png",
         "stock": "Коледино WB",
         "manufacturer": "OOO Мегапрофстиль",
-        "delivery-date": []
+        "deliveryDate": []
     },
     {
         "id": 6,
@@ -100,6 +100,6 @@
         "img": "https://raw.githubusercontent.com/Eugene-Oceanov/wb-L0-cart/main/src/json/img/pensils.png",
         "stock": "Коледино WB",
         "manufacturer": "ООО Вайлдберриз",
-        "delivery-date": []
+        "deliveryDate": []
     }
 ]
