@@ -1,17 +1,19 @@
 "use strict"
 
 import "./assets/css/style.css";
-const cartItemLayout = require("./components/cart-item.js");
-const cartMath = require("./components/cart-math.js")
+const cartItemLayout = require("./components/cart-item.js"); // модуль с верстками разных типов карточек
+const cartFuncs = require("./components/cart-funcs.js"); // модуль с несколькими математическими операциями для расчета финальных показателей цены, скидки и тд
 
-
+// ноды для вывода карточек товаров доступных и недоступных к заказу
 const cartAviable = document.querySelector(".cart-aviable__container");
 const cartNotAviable = document.querySelector(".cart-not-aviable__container");
 
+// ноды в самой корзине для вывода нижеуказанных данных
 const cartMainPointAdress = document.querySelector(".cartMainPointAdress");
 const cartMainPointRating = document.querySelector(".cartMainPointRating");
 const cartMainPointSchedule = document.querySelector(".cartMainPointSchedule");
 
+// ноды в сайдбаре для вывода нижеуказанных данных
 const totalPrice = document.querySelector(".totalPrice");
 const goodsQuantity = document.querySelector(".goodsQuantity");
 const originalPrice = document.querySelector(".originalPrice");
@@ -19,18 +21,22 @@ const totalDiscount = document.querySelector(".totalDiscount");
 const sidebarPickupPoint = document.querySelector(".sidebarPickupPoint");
 const sidebarDeliveryDate = document.querySelector(".sidebarDeliveryDate");
 
+// url api корзины и пользователя
 const cartJSON = "https://raw.githubusercontent.com/Eugene-Oceanov/wb-L0-cart/main/src/json/cart-api.json";
 const userJSON = "https://raw.githubusercontent.com/Eugene-Oceanov/wb-L0-cart/main/src/json/user.json";
 
-const cart = getCartData(cartJSON);
-const user = getCartData(userJSON);
+// получаем корзину и пользователя из api
+const cart = cartFuncs.getData(cartJSON);
+const user = cartFuncs.getData(userJSON);
 
+// объект заказа, который должен отправляться на сервер, когда пользователь нажимает кнопку "заказать"
 const order = {
     recipient: {},
     point: "",
     goods: [],
 }
 
+// 4 всадника апокалипсиса
 let totalPriceSum = 0;
 let totalOriginalPrice = 0;
 let totalQuantitySum = 0;
@@ -39,12 +45,12 @@ let totalDiscountSum = 0;
 // перебираем массив товаров, добавленных в корзину
 cart.then(data => {
     data.forEach(item => {
-
-        if (item.remainder > 0) { // отрисовываем верстку товаров корзины доступных к заказу
-            const cartItem = cartItemLayout.fullCartItem(item);
+        if (item.remainder > 0) { // здесь вся логика, касающаяся товаров
+            order.goods.push(item); // поскольку чекбоксы заранее в положении checked, сразу добавляем эти товары в заказ
+            let orderGood = order.goods[order.goods.indexOf(item)]; //Переменная, которая обращается к элементу заказа, который является именно этим объектом
+            const cartItem = cartItemLayout.fullCartItem(item); // отрисовываем верстку товаров корзины доступных к заказу
             cartAviable.append(cartItem);
             const cartItemCheckbox = cartItem.querySelector(".cartItemCheckbox");
-
             cartItemCheckbox.addEventListener("change", () => { // логика добавления товаров в заказ по нажатию на чекбоксы
                 if (cartItemCheckbox.checked) {
                     order.goods.push(item);
@@ -54,59 +60,97 @@ cart.then(data => {
                     getTotals(order.goods);
                 }
             })
+            // логика изменения количества товаров в заказе по кнопкам + и - в карточке товара
+            const quantityIncrease = cartItem.querySelector(".quantityIncrease");
+            const quantityLower = cartItem.querySelector(".quantityLower");
+            const quantityValue = cartItem.querySelector(".quantityValue");
+            const itemFinalPrice = cartItem.querySelector(".itemFinalPrice");
+            const itemOriginalPrice = cartItem.querySelector(".itemOriginalPrice");
+            const quantityRemainder = cartItem.querySelector(".quantityRemainder");
 
-            cartItem.querySelector(".quantityLower").addEventListener("click", () => {
-                order.goods.indexOf(item).quantity--;
-                getTotals(order.goods);
+            quantityLower.addEventListener("click", () => { // нажатие на минус
+                if (orderGood.quantity > 0) {
+                    orderGood.quantity--;
+                    orderGood.remainder++;
+                    quantityValue.textContent = orderGood.quantity;
+                    itemFinalPrice.textContent = ((Math.round(orderGood.price - (orderGood.price / 100 * orderGood.discount))) * orderGood.quantity)
+                    itemOriginalPrice.textContent = (item.price * item.quantity).toLocaleString("ru");
+                    if (quantityRemainder) quantityRemainder.textContent = orderGood.remainder;
+                    getTotals(order.goods);
+                } else return;
             })
-
-            order.goods.push(item); // поскольку чекбоксы заранее в положении checked, сразу добавляем эти товары в заказ
+            quantityIncrease.addEventListener("click", () => { //нажатие на плюс
+                if (orderGood.quantity < (orderGood.quantity + orderGood.remainder)) {
+                    orderGood.quantity++;
+                    orderGood.remainder--;
+                    quantityValue.textContent = orderGood.quantity;
+                    itemFinalPrice.textContent = ((Math.round(orderGood.price - (orderGood.price / 100 * orderGood.discount))) * orderGood.quantity)
+                    itemOriginalPrice.textContent = (item.price * item.quantity).toLocaleString("ru");
+                    if (quantityRemainder) quantityRemainder.textContent = orderGood.remainder;
+                    getTotals(order.goods);
+                } else return;
+            })
         } else if (item.remainder === 0) { // отрисовываем верстку товаров корзины НЕ доступных к заказу
             const cartItemNotAviable = cartItemLayout.cartItemNotAviable(item);
             cartNotAviable.append(cartItemNotAviable)
         }
     })
-
     getTotals(order.goods);
 });
 
+// я не совсем уверен, как устроен бэкенд в этом примере и нужна ли эта функция, ведь внизу страницы есть инпуты, которые все равно передают эти данные.
+// но что бы я мог сказать, что код "масштабируемый", что бы это не значило, и похвалить себя, зачем то написал. 
+// Ведь что бы сделать заказ, надо зарегистрироваться, а значит должен быть юзер. Наверное.
+// P.S. Вообще я знаю, что такое масштабируемый код, и это не он:)
 user.then(data => {
     order.recipient.name = data.name;
     order.recipient.surname = data.surname;
     order.recipient.eMail = data.eMail;
     order.recipient.phone = data.phone;
     order.recipient.inn = data.inn;
-    order.recipient.payInfo.push(...data.payInfo);
+    order.recipient.payInfo = data.payInfo;
     order.point = data.pickUpPoint;
-
     cartMainPointAdress.textContent = order.point.adress;
     cartMainPointRating.textContent = order.point.rating;
     cartMainPointSchedule.textContent = order.point.schedule;
     sidebarPickupPoint.textContent = order.point.adress;
 })
 
-function getTotals (arr) {
+document.querySelector("#main-sidebar-payment-postpaid__checkbox").addEventListener("change", (e) => {
+    if (e.target.checked) {
+        let totalPrice = 0;
+        order.goods.forEach(orderGood => {
+            totalPrice += cartFuncs.getTotalPrice(orderGood.price, orderGood.discount, orderGood.quantity);
+        })
+        document.querySelector(".cart-sidebar__order-btn").textContent = `Оплатить ${totalPrice.toLocaleString("ru")} сом`;
+    } else document.querySelector(".cart-sidebar__order-btn").textContent = "Заказать";
+})
+
+// логика открытия модалочек с информацией об обратной оплате
+document.querySelector(".showMainCartReturnDeliveryModal").addEventListener("click", () => {
+    document.querySelector(".cart-main-delivery-return-modal").classList.toggle("d-none");
+})
+document.querySelector(".showSidebarReturnDeliveryModal").addEventListener("click", () => {
+    document.querySelector(".main-sidebar-return-delivery-modal").classList.toggle("d-none");
+})
+
+// функция, которая пересчитывает финальные показатели (общая цена, скидка, количество и тд) и записывает их в сайдбар 
+function getTotals(arr) {
+    // обнуляем показатели
     totalPriceSum = 0;
     totalQuantitySum = 0;
     totalOriginalPrice = 0;
     totalDiscountSum = 0;
-
+    // проходим по массиву с товарами в заказе и переопределяем показатели
     arr.forEach(orderGood => {
-        totalPriceSum += cartMath.getTotalPrice(orderGood.price, orderGood.discount, orderGood.quantity);
+        totalPriceSum += cartFuncs.getTotalPrice(orderGood.price, orderGood.discount, orderGood.quantity);
         totalQuantitySum += orderGood.quantity;
         totalOriginalPrice += orderGood.price * orderGood.quantity;
-        totalDiscountSum += cartMath.getDiscount(orderGood.price, orderGood.discount, orderGood.quantity);
+        totalDiscountSum += cartFuncs.getDiscount(orderGood.price, orderGood.discount, orderGood.quantity);
     })
-
+    // передаем переопределенные показатели в ноды
     totalPrice.textContent = totalPriceSum.toLocaleString("ru");
     goodsQuantity.textContent = `${totalQuantitySum.toLocaleString("ru")} товара`;
     originalPrice.textContent = totalOriginalPrice.toLocaleString("ru");
     totalDiscount.textContent = totalDiscountSum.toLocaleString("ru");
 }
-
-async function getCartData(url) {
-    let json = await fetch(url);
-    let data = await json.json();
-    return data;
-}
-

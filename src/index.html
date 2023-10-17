@@ -10,6 +10,10 @@
 </head>
 
 <body>
+    <!-- modals start -->
+    <div class="overlay"></div>
+
+    <!-- modals end -->
 
     <!-- header start -->
     <header id="header">
@@ -161,8 +165,10 @@
                             </defs>
                         </svg>
                         <p class="cart-main-delivery-return__info">Обратная доставка товаров на склад при отказе —
-                            <span>бесплатно</span>
+                            <span class="showMainCartReturnDeliveryModal cursor-pointer">бесплатно</span>
                         </p>
+                        <div class="cart-main-delivery-return-modal d-none">Если товары вам не подойдут, мы вернем
+                            их обратно на склад — это бесплатно</div>
                     </div>
                 </div>
 
@@ -231,8 +237,7 @@
             <section class="cart-sidebar">
                 <div class="main-sidebar-summary-price main-sidebar__row d-flex jc-space-between">
                     <p class="main-sidebar-summary-price__text">Итого</p>
-                    <p class="main-sidebar-summary-price__price"><span class="totalPrice">2 205 515</span> <span
-                            class="valute"> сом</span></p>
+                    <p class="main-sidebar-summary-price__price"><span class="totalPrice"></span> сом</p>
                 </div>
                 <div class="main-sidebar-total main-sidebar__row d-flex jc-space-between">
                     <p class="main-sidebar-total__quantity goodsQuantity"></p>
@@ -245,7 +250,7 @@
                 </div>
                 <div class="main-sidebar-delivery main-sidebar__row d-flex jc-space-between">
                     <p class="main-sidebar-delivery__text">Доставка</p>
-                    <p class="main-sidebar-delivery__delivery-price">Бесплатно</p>
+                    <p class="main-sidebar-delivery__delivery-price ">Бесплатно</p>
                 </div>
                 <div class="main-sidebar-pickup-point">
                     <p class="main-sidebar-pickup-point__title">Доставка в пункт выдачи</p>
@@ -274,8 +279,10 @@
                             </defs>
                         </svg>
                         <p class="main-sidebar-return-delivery__info">Обратная доставка товаров на склад при отказе -
-                            <span>бесплатно</span>
+                            <span class="showSidebarReturnDeliveryModal cursor-pointer">бесплатно</span>
                         </p>
+                        <div class="main-sidebar-return-delivery-modal d-none">Если товары вам не подойдут, мы вернем
+                            их обратно на склад — это бесплатно</div>
                     </div>
                 </div>
                 <div class="main-sidebar-payment">

@@ -11,8 +11,9 @@
     },
     "payInfo": [
         {
+            "system": "mir",
             "cardNumber": "1234567890121234",
             "validity": "01/30"
-        }
+        },
     ]
 }
