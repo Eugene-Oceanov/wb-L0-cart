@@ -15,5 +15,15 @@
             "cardNumber": "1234567890121234",
             "validity": "01/30"
         },
+        {
+            "system": "visa",
+            "cardNumber": "1234567890121234",
+            "validity": "01/30"
+        },
+        {
+            "system": "masterCard",
+            "cardNumber": "1234567890121234",
+            "validity": "01/30"
+        }
     ]
 }
