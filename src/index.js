@@ -114,6 +114,10 @@ user.then(data => {
     cartMainPointRating.textContent = order.point.rating;
     cartMainPointSchedule.textContent = order.point.schedule;
     sidebarPickupPoint.textContent = order.point.adress;
+
+    order.recipient.payInfo.forEach(item => {
+        // if(item.system == "mir") 
+    })
 })
 
 document.querySelector("#main-sidebar-payment-postpaid__checkbox").addEventListener("change", (e) => {
