@@ -37,29 +37,41 @@ const order = {
     goods: [],
 }
 
+let totalPriceSum = 0;
+let totalOriginalPrice = 0;
+let totalQuantitySum = 0;
+let totalDiscountSum = 0;
+
 // перебираем массив товаров, добавленных в корзину
 cart.then(data => {
     data.forEach(item => {
-        // отрисовываем верстку товаров корзины доступных к заказу
-        if (item.remainder > 0) {
+
+        if (item.remainder > 0) { // отрисовываем верстку товаров корзины доступных к заказу
             const cartItem = cartItemLayout.fullCartItem(item);
             cartAviable.append(cartItem);
             const cartItemCheckbox = cartItem.querySelector(".cartItemCheckbox");
 
-            // логика добавления товаров в заказ по нажатию на чекбоксы
-            cartItemCheckbox.addEventListener("change", () => {
+            cartItemCheckbox.addEventListener("change", () => { // логика добавления товаров в заказ по нажатию на чекбоксы
                 if (cartItemCheckbox.checked) order.goods.push(item);
                 else order.goods.splice(order.goods.indexOf(item), 1);
             })
-            // поскольку чекбоксы заранее в положении checked, сразу добавляем эти товары в заказ
-            order.goods.push(item);
-            // отрисовываем верстку товаров корзины доступных к заказу
-        } else if (item.remainder === 0) {
+            order.goods.push(item); // поскольку чекбоксы заранее в положении checked, сразу добавляем эти товары в заказ
+        } else if (item.remainder === 0) { // отрисовываем верстку товаров корзины НЕ доступных к заказу
             const cartItemNotAviable = cartItemLayout.cartItemNotAviable(item);
             cartNotAviable.append(cartItemNotAviable)
         }
     })
-    
+
+    order.goods.forEach(orderGood => {
+        totalPriceSum += cartMath.getTotalPrice(orderGood.price, orderGood.discount, orderGood.quantity);
+        totalQuantitySum += orderGood.quantity;
+        totalOriginalPrice += orderGood.price * orderGood.quantity;
+        totalDiscountSum += cartMath.getDiscount(orderGood.price, orderGood.discount, orderGood.quantity);
+    })
+    totalPrice.textContent = totalPriceSum.toLocaleString("ru");
+    goodsQuantity.textContent = `${totalQuantitySum.toLocaleString("ru")} товара`;
+    originalPrice.textContent = totalOriginalPrice.toLocaleString("ru");
+    totalDiscount.textContent = totalDiscountSum.toLocaleString("ru");
 });
 
 user.then(data => {
