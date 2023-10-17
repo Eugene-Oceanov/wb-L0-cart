@@ -49,7 +49,7 @@
         "quantity": 2,
         "remainder": 2,
         "price": 475,
-        "discount": 500,
+        "discount": 50,
         "img": "https://raw.githubusercontent.com/Eugene-Oceanov/wb-L0-cart/main/src/json/img/pensils.png",
         "stock": "Коледино WB",
         "manufacturer": "ООО Вайлдберриз",

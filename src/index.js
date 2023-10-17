@@ -31,8 +31,8 @@ const order = {
     goods: [],
 }
 
+// перебираем массив товаров, добавленных в корзину
 cart.then(data => {
-    let totalPriceSum = 0;
     data.forEach(item => {
         // отрисовываем верстку товаров корзины доступных к заказу
         if (item.remainder > 0) {
@@ -45,15 +45,14 @@ cart.then(data => {
                 if (cartItemCheckbox.checked) order.goods.push(item);
                 else order.goods.splice(order.goods.indexOf(item), 1);
             })
-
-            totalPriceSum += cartMath.getTotalPrice(item.price, item.discount)
+            // поскольку чекбоксы заранее в положении checked, сразу добавляем эти товары в заказ
+            order.goods.push(item);
             // отрисовываем верстку товаров корзины доступных к заказу
         } else if (item.remainder === 0) {
             const cartItemNotAviable = cartItemLayout.cartItemNotAviable(item);
             cartNotAviable.append(cartItemNotAviable)
         }
     })
-    totalPrice.textContent = Math.round(totalPriceSum);
 });
 
 async function getCartData(url) {

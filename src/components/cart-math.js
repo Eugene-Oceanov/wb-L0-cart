@@ -1,11 +1,11 @@
 module.exports = {
-    getTotalPrice: function (price, discount) {
-        let totalPrice = price / 100 * discount;
+    getTotalPrice: function (price, discount, quantity) {
+        let totalPrice = (price / 100 * discount) * quantity;
         return totalPrice
     },
 
-    getDiscount: function (price, discount) {
-        let totalDiscount = price - (price / 100 * discount);
+    getDiscount: function (price, discount, quantity) {
+        let totalDiscount = (price - (price / 100 * discount)) * quantity;
         return totalDiscount;
     }
 }
