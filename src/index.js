@@ -7,6 +7,11 @@ const cartMath = require("./components/cart-math.js")
 
 const cartAviable = document.querySelector(".cart-aviable__container");
 const cartNotAviable = document.querySelector(".cart-not-aviable__container");
+
+const cartMainPointAdress = document.querySelector(".cartMainPointAdress");
+const cartMainPointRating = document.querySelector(".cartMainPointRating");
+const cartMainPointSchedule = document.querySelector(".cartMainPointSchedule");
+
 const totalPrice = document.querySelector(".totalPrice");
 const goodsQuantity = document.querySelector(".goodsQuantity");
 const originalPrice = document.querySelector(".originalPrice");
@@ -29,11 +34,7 @@ const order = {
         inn: "",
         payInfo: []
     },
-    point: {
-        adress: "",
-        shedule: "",
-        rating: 0
-    },
+    point: "",
     goods: [],
 }
 
@@ -52,8 +53,30 @@ cart.then(data => {
             const cartItemCheckbox = cartItem.querySelector(".cartItemCheckbox");
 
             cartItemCheckbox.addEventListener("change", () => { // логика добавления товаров в заказ по нажатию на чекбоксы
-                if (cartItemCheckbox.checked) order.goods.push(item);
-                else order.goods.splice(order.goods.indexOf(item), 1);
+                if (cartItemCheckbox.checked) {
+                    order.goods.push(item);
+                    order.goods.forEach(orderGood => {
+                        totalPriceSum += cartMath.getTotalPrice(orderGood.price, orderGood.discount, orderGood.quantity);
+                        totalQuantitySum += orderGood.quantity;
+                        totalOriginalPrice += orderGood.price * orderGood.quantity;
+                        totalDiscountSum += cartMath.getDiscount(orderGood.price, orderGood.discount, orderGood.quantity);
+                    })
+                    totalPrice.textContent = totalPriceSum.toLocaleString("ru");
+                    goodsQuantity.textContent = `${totalQuantitySum.toLocaleString("ru")} товара`;
+                    originalPrice.textContent = totalOriginalPrice.toLocaleString("ru");
+                    totalDiscount.textContent = totalDiscountSum.toLocaleString("ru");
+                } else {
+                    order.goods.splice(order.goods.indexOf(item), 1);
+                    order.goods.forEach(orderGood => {
+                        totalPriceSum += cartMath.getTotalPrice(orderGood.price, orderGood.discount, orderGood.quantity);
+                        totalQuantitySum += orderGood.quantity;
+                        totalOriginalPrice += orderGood.price * orderGood.quantity;
+                        totalDiscountSum += cartMath.getDiscount(orderGood.price, orderGood.discount, orderGood.quantity);
+                    })
+                    totalPrice.textContent = totalPriceSum.toLocaleString("ru");
+                    goodsQuantity.textContent = `${totalQuantitySum.toLocaleString("ru")} товара`;
+                    originalPrice.textContent = totalOriginalPrice.toLocaleString("ru");
+                }
             })
             order.goods.push(item); // поскольку чекбоксы заранее в положении checked, сразу добавляем эти товары в заказ
         } else if (item.remainder === 0) { // отрисовываем верстку товаров корзины НЕ доступных к заказу
@@ -81,6 +104,12 @@ user.then(data => {
     order.recipient.phone = data.phone;
     order.recipient.inn = data.inn;
     order.recipient.payInfo.push(...data.payInfo);
+    order.point = data.pickUpPoint;
+
+    cartMainPointAdress.textContent = order.point.adress;
+    cartMainPointRating.textContent = order.point.rating;
+    cartMainPointSchedule.textContent = order.point.schedule;
+    sidebarPickupPoint.textContent = order.point.adress;
 })
 
 async function getCartData(url) {
@@ -88,3 +117,4 @@ async function getCartData(url) {
     let data = await json.json();
     return data;
 }
+
