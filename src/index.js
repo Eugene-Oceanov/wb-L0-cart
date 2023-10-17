@@ -4,6 +4,7 @@ import "./assets/css/style.css";
 const cartItemLayout = require("./components/cart-item.js");
 const cartMath = require("./components/cart-math.js")
 
+
 const cartAviable = document.querySelector(".cart-aviable__container");
 const cartNotAviable = document.querySelector(".cart-not-aviable__container");
 const totalPrice = document.querySelector(".totalPrice");
@@ -20,14 +21,19 @@ const cart = getCartData(cartJSON);
 const user = getCartData(userJSON);
 
 const order = {
-    sender: {
+    recipient: {
         name: "",
         surname: "",
-        email: "",
+        eMail: "",
         phone: "",
-        inn: ""
+        inn: "",
+        payInfo: []
     },
-    point: "",
+    point: {
+        adress: "",
+        shedule: "",
+        rating: 0
+    },
     goods: [],
 }
 
@@ -53,7 +59,17 @@ cart.then(data => {
             cartNotAviable.append(cartItemNotAviable)
         }
     })
+    
 });
+
+user.then(data => {
+    order.recipient.name = data.name;
+    order.recipient.surname = data.surname;
+    order.recipient.eMail = data.eMail;
+    order.recipient.phone = data.phone;
+    order.recipient.inn = data.inn;
+    order.recipient.payInfo.push(...data.payInfo);
+})
 
 async function getCartData(url) {
     let json = await fetch(url);

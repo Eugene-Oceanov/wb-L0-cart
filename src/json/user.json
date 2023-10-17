@@ -3,13 +3,16 @@
     "surname": "",
     "eMail": "",
     "phone": "9881234567",
+    "inn": "",
     "pickUpPoint": {
         "adress": "Бишкек, улица Ахматбека Суюмбаева, 12/1",
         "schedule": "Ежедневно с 10 до 21",
         "rating": 4.99
     },
-    "payInfo": {
-        "cardNumber": "1234567890121234",
-        "validity": "01/30"
-    }
+    "payInfo": [
+        {
+            "cardNumber": "1234567890121234",
+            "validity": "01/30"
+        }
+    ]
 }
