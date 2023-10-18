@@ -163,6 +163,7 @@ input[type="checkbox"]:checked+.cb-label:after {
   min-height: 62.9%;
   padding: 1.15em 1.5em;
   border-radius: 1.2em;
+  cursor: default;
 }
 
 .modal-row {
@@ -213,7 +214,7 @@ input[type=radio]:checked+.radio-label .pseudo-radio {
   width: 37%;
 }
 
-.modal-delivery__way-item {
+.delivery-modal__way-item {
   width: 49%;
   padding: 0.45em 0;
   border: 2px solid rgba(203, 17, 171, 0.15);

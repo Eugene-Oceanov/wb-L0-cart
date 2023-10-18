@@ -12,7 +12,12 @@ const closePaymentModal = document.querySelector(".close-payment-modal");
 const paymentModalWrapper = document.querySelector(".payment-modal-radio-wrapper");
 const paymentModalBtn = document.querySelector(".payment-modal__btn");
 
-// const deliveryModal = document.querySelector(".")
+const deliveryModal = document.querySelector(".delivery-modal");
+const closeDeliveryModal = document.querySelector(".close-delivery-modal");
+const deliveryModalPointBtn = document.querySelector(".modal-delivery__point-way");
+const deliveryCourierPointBtn = document.querySelector(".modal-delivery__courier-way");
+const deliveryModalWrapper = document.querySelector(".modal-delivery-adresses-wrapper");
+const deliveryModalBtn = document.querySelector(".delivery-modal__btn");
 
 // ноды для вывода карточек товаров доступных и недоступных к заказу
 const cartAviable = document.querySelector(".cart-aviable__container");
@@ -30,6 +35,13 @@ const originalPrice = document.querySelector(".originalPrice");
 const totalDiscount = document.querySelector(".totalDiscount");
 const sidebarPickupPoint = document.querySelector(".sidebarPickupPoint");
 const sidebarDeliveryDate = document.querySelector(".sidebarDeliveryDate");
+
+// ноды инпутов
+const nameInput = document.querySelector(".cart-main-form__name");
+const surnameInput = document.querySelector(".cart-main-form__surname");
+const emailInput = document.querySelector(".cart-main-form__email");
+const phoneInput = document.querySelector(".cart-main-form__phone");
+const innInput = document.querySelector(".cart-main-form__inn");
 
 // url api корзины и пользователя
 const cartJSON = "https://raw.githubusercontent.com/Eugene-Oceanov/wb-L0-cart/main/src/json/cart-api.json";
@@ -124,19 +136,20 @@ user.then(data => {
     cartMainPointSchedule.textContent = order.point.schedule;
     sidebarPickupPoint.textContent = order.point.adress;
 
-    let counter = 0;
+    let paymentCounter = 0;
     let currentCard = "";
     data.payInfo.forEach(item => {
-        let paymentItem = cartItemLayout.paySystemItem(item, counter);
+        let paymentItem = cartItemLayout.paySystemItem(item, paymentCounter);
         paymentModalWrapper.append(paymentItem);
         paymentItem.querySelector(".payment-radio-label").addEventListener("click", () => {
             currentCard = item;
         })
-        counter += 1;
+        paymentCounter += 1;
     });
     paymentModalBtn.addEventListener("click", () => {
         if (currentCard) {
             order.payInfo.card = currentCard;
+            document.querySelector(".cart-main-payment-card-system-icon").innerHTML = cartItemLayout.paySystemIcon(order.payInfo.card.system);
             document.querySelector(".cart-main-payment__card-number").textContent = cartFuncs.hiddenCardNumber(order.payInfo.card.cardNumber);
             document.querySelector(".cart-main-payment__card-validity").textContent = order.payInfo.card.validity;
             document.querySelector(".main-sidebar-payment-card__number").textContent = cartFuncs.hiddenCardNumber(order.payInfo.card.cardNumber);
@@ -144,6 +157,13 @@ user.then(data => {
         paymentModal.style.display = "none";
         overlay.style.display = "none";
         console.log(order);
+    })
+
+    let deliveryCounter = 0;
+    data.adresses.forEach(item => {
+        let adressItem = cartItemLayout.adressItem(item, deliveryCounter);
+        deliveryModalWrapper.append(adressItem);
+        
     })
 })
 
@@ -188,4 +208,15 @@ function getTotals(arr) {
     goodsQuantity.textContent = `${totalQuantitySum.toLocaleString("ru")} товара`;
     originalPrice.textContent = totalOriginalPrice.toLocaleString("ru");
     totalDiscount.textContent = totalDiscountSum.toLocaleString("ru");
+}
+
+// обработчики закрытия модалок
+overlay.addEventListener("click", () => closeModal());
+closePaymentModal.addEventListener("click", () => closeModal());
+closeDeliveryModal.addEventListener("click", () => closeModal());
+
+function closeModal() {
+    paymentModal.style.display="none";
+    deliveryModal.style.display="none";
+    overlay.style.display="none";
 }
