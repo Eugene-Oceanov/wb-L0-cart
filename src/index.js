@@ -4,6 +4,16 @@ import "./assets/css/style.css";
 const cartItemLayout = require("./components/cart-item.js"); // модуль с верстками разных типов карточек
 const cartFuncs = require("./components/cart-funcs.js"); // модуль с несколькими математическими операциями для расчета финальных показателей цены, скидки и тд
 
+// ноды модалок
+const overlay = document.querySelector(".overlay");
+
+const paymentModal = document.querySelector(".payment-modal");
+const closePaymentModal = document.querySelector(".close-payment-modal");
+const paymentModalWrapper = document.querySelector(".payment-modal-radio-wrapper");
+const paymentModalBtn = document.querySelector(".payment-modal__btn");
+
+const deliveryModal = document.querySelector(".")
+
 // ноды для вывода карточек товаров доступных и недоступных к заказу
 const cartAviable = document.querySelector(".cart-aviable__container");
 const cartNotAviable = document.querySelector(".cart-not-aviable__container");
@@ -113,14 +123,27 @@ user.then(data => {
     cartMainPointRating.textContent = order.point.rating;
     cartMainPointSchedule.textContent = order.point.schedule;
     sidebarPickupPoint.textContent = order.point.adress;
+
     let counter = 0;
+    let currentCard = "";
     data.payInfo.forEach(item => {
         let paymentItem = cartItemLayout.paySystemItem(item, counter);
-        document.querySelector(".payment-modal-radio-wrapper").append(paymentItem);
+        paymentModalWrapper.append(paymentItem);
         paymentItem.querySelector(".payment-radio-label").addEventListener("click", () => {
-            order.payInfo.card = item;
+            currentCard = item;
         })
         counter += 1;
+    });
+    paymentModalBtn.addEventListener("click", () => {
+        if (currentCard) {
+            order.payInfo.card = currentCard;
+            document.querySelector(".cart-main-payment__card-number").textContent = cartFuncs.hiddenCardNumber(order.payInfo.card.cardNumber);
+            document.querySelector(".cart-main-payment__card-validity").textContent = order.payInfo.card.validity;
+            document.querySelector(".main-sidebar-payment-card__number").textContent = cartFuncs.hiddenCardNumber(order.payInfo.card.cardNumber);
+        }
+        paymentModal.style.display = "none";
+        overlay.style.display = "none";
+        console.log(order);
     })
 })
 
