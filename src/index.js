@@ -1,8 +1,8 @@
 "use strict"
 
 import "./assets/css/style.css";
-const cartItemLayout = require("./components/cart-item.js"); // модуль с верстками разных типов карточек
-const cartFuncs = require("./components/cart-funcs.js"); // модуль с несколькими математическими операциями для расчета финальных показателей цены, скидки и тд
+const layouts = require("./modules/layouts.js"); // модуль с верстками разных типов карточек
+const cartFuncs = require("./modules/cart-funcs.js"); // модуль с несколькими математическими операциями для расчета финальных показателей цены, скидки и тд
 
 // ноды модалок
 const overlay = document.querySelector(".overlay");
@@ -69,7 +69,7 @@ cart.then(data => {
         if (item.remainder > 0) { // здесь вся логика, касающаяся товаров
             order.goods.push(item); // поскольку чекбоксы заранее в положении checked, сразу добавляем эти товары в заказ
             let orderGood = order.goods[order.goods.indexOf(item)]; //Переменная, которая обращается к элементу заказа, который является именно этим объектом
-            const cartItem = cartItemLayout.fullCartItem(item); // отрисовываем верстку товаров корзины доступных к заказу
+            const cartItem = layouts.fullCartItem(item); // отрисовываем верстку товаров корзины доступных к заказу
             cartAviable.append(cartItem);
             const cartItemCheckbox = cartItem.querySelector(".cartItemCheckbox");
             cartItemCheckbox.addEventListener("change", () => { // логика добавления товаров в заказ по нажатию на чекбоксы
@@ -112,7 +112,7 @@ cart.then(data => {
                 } else return;
             })
         } else if (item.remainder === 0) { // отрисовываем верстку товаров корзины НЕ доступных к заказу
-            const cartItemNotAviable = cartItemLayout.cartItemNotAviable(item);
+            const cartItemNotAviable = layouts.cartItemNotAviable(item);
             cartNotAviable.append(cartItemNotAviable)
         }
     })
@@ -136,7 +136,7 @@ user.then(data => {
     let paymentCounter = 0;
     let currentCard = "";
     data.payInfo.forEach(item => {
-        let paymentItem = cartItemLayout.paySystemItem(item, paymentCounter);
+        let paymentItem = layouts.paySystemItem(item, paymentCounter);
         paymentModalWrapper.append(paymentItem);
         paymentItem.querySelector(".payment-radio-label").addEventListener("click", () => {
             currentCard = item;
@@ -146,7 +146,7 @@ user.then(data => {
     paymentModalBtn.addEventListener("click", () => {
         if (currentCard) {
             order.payInfo.card = currentCard;
-            document.querySelector(".cart-main-payment-card-system-icon").innerHTML = cartItemLayout.paySystemIcon(order.payInfo.card.system);
+            document.querySelector(".cart-main-payment-card-system-icon").innerHTML = layouts.paySystemIcon(order.payInfo.card.system);
             document.querySelector(".cart-main-payment__card-number").textContent = cartFuncs.hiddenCardNumber(order.payInfo.card.cardNumber);
             document.querySelector(".cart-main-payment__card-validity").textContent = order.payInfo.card.validity;
             document.querySelector(".main-sidebar-payment-card__number").textContent = cartFuncs.hiddenCardNumber(order.payInfo.card.cardNumber);
@@ -158,8 +158,9 @@ user.then(data => {
 
     let deliveryCounter = 0;
     data.adresses.forEach(item => {
-        let adressItem = cartItemLayout.adressItem(item, deliveryCounter);
+        let adressItem = layouts.adressItem(item, deliveryCounter);
         deliveryModalWrapper.append(adressItem);
+        deliveryCounter++;
     })
 })
 
@@ -188,10 +189,10 @@ const innInput = document.querySelector(".cart-main-form__inn");
 
 sendOrderBtn.addEventListener("click", () => {
     let nameRegExp = /^[a-zA-Zа-яА-Я]+$/;
-    emailRegExp = /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/iu;
-    phoneRegExp = /^([+]?[0-9\s-\(\)]{3,25})*$/i;
+    let emailRegExp = /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/iu;
+    let phoneRegExp = /^([+]?[0-9\s-\(\)]{3,25})*$/i;
 
-    if(nameInput.value != "" && nameRegExp.test(nameInput.value)) {
+    if (nameInput.value != "" && nameRegExp.test(nameInput.value)) {
         nameInput.style.borderBottom = "1px solid var(--system-grey);";
         order.recipient.name = nameInput.value;
     } else {
@@ -199,31 +200,31 @@ sendOrderBtn.addEventListener("click", () => {
         return;
     }
 
-    if(surnameInput.value != "" && nameRegExp.test(surnameInput.value)) {
+    if (surnameInput.value != "" && nameRegExp.test(surnameInput.value)) {
         surnameInput.style.borderBottom = "1px solid var(--system-grey);";
-        order.recipient.name = surnameInput.value;
+        order.recipient.surname = surnameInput.value;
     } else {
         surnameInput.style.borderBottom = "1px solid red";
         return;
     }
 
-    if(emailInput.value != "" && emailRegExp.test(emailInput.value)) {
+    if (emailInput.value != "" && emailRegExp.test(emailInput.value)) {
         emailInput.style.borderBottom = "1px solid var(--system-grey);";
-        order.recipient.name = emailInput.value;
+        order.recipient.eMail = emailInput.value;
     } else {
         emailInput.style.borderBottom = "1px solid red";
         return;
     }
 
-    if(phoneInput.value != "" && phoneRegExp.test(phoneInput.value)) {
+    if (phoneInput.value != "" && phoneRegExp.test(phoneInput.value)) {
         phoneInput.style.borderBottom = "1px solid var(--system-grey);";
-        order.recipient.name = phoneInput.value;
+        order.recipient.phone = phoneInput.value;
     } else {
         phoneInput.style.borderBottom = "1px solid red";
         return;
     }
 
-    if(order.goods.length === 0) {
+    if (order.goods.length === 0) {
         alert("Выберите товары");
         return;
     }
@@ -252,7 +253,7 @@ document.querySelector(".cart-main-payment__options-btn").addEventListener("clic
 
 // обработчики закрытия модалок
 overlay.addEventListener("click", (e) => {
-    if(e.target === overlay) closeModal()
+    if (e.target === overlay) closeModal()
 });
 closePaymentModal.addEventListener("click", () => closeModal());
 closeDeliveryModal.addEventListener("click", () => closeModal());

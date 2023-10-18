@@ -19,7 +19,11 @@ module.exports = {
                             ${item.size ? `<p class="cart-item-properties__item">Размер: ${item.size}</p>` : ""}
                         </div>
                         <p class="cart-item__stock">${item.stock}</p>
-                        <p class="cart-item__manufacturer">${item.manufacturer}</p>
+                        <p class="cart-item__manufacturer d-flex">${item.manufacturer}
+                        <svg class="cursor-pointer" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                        <circle cx="10" cy="10" r="7.5" stroke="#9797AF"/>
+                        <path d="M9.88867 7.58691C9.62826 7.58691 9.41504 7.51042 9.24902 7.35742C9.08301 7.20117 9 7.01074 9 6.78613C9 6.55501 9.08301 6.36621 9.24902 6.21973C9.41504 6.07324 9.62826 6 9.88867 6C10.1523 6 10.3656 6.07324 10.5283 6.21973C10.6943 6.36621 10.7773 6.55501 10.7773 6.78613C10.7773 7.02051 10.6943 7.21257 10.5283 7.3623C10.3656 7.51204 10.1523 7.58691 9.88867 7.58691ZM10.6504 13.3779H9.10742V8.37793H10.6504V13.3779Z" fill="#9797AF"/>
+                        </svg></p>
                     </div>
                     <div class="cart-item-options d-flex jc-space-between">
                         <div class="cart-item-options-panel">
@@ -122,16 +126,18 @@ module.exports = {
     // ==================================================================================================================================
     adressItem: function (item, counter) {
         const adressItem = document.createElement("DIV");
-        adressItem.classList.add("delivery-modal-item");
-        adressItem.innerHTML = `<input type="radio" name="modal-radio delivery-modal-radio__adress" id="delivery-radio${counter}">
-                                    <label for="delivery-radio${counter}" class="radio-label delivery-radio-label d-flex ai-center cursor-pointer">
+        adressItem.classList.add("delivery-modal-item", "modal-item");
+        adressItem.innerHTML = `<div class="d-flex jc-space-between">
+                                    <input type="radio" class="modal-radio" name="delivery-modal-radio__adress" id="delivery-radio${counter}">
+                                    <label for="delivery-radio${counter}" class="radio-label delivery-radio-label d-flex cursor-pointer">
                                         <div class="pseudo-radio"></div>${item}
                                     </label>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                    <svg class="cursor-pointer  " xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
                                     <path fill-rule="evenodd" clip-rule="evenodd" d="M2.5 5C2.5 4.72386 2.72386 4.5 3 4.5H17C17.2761 4.5 17.5 4.72386 17.5 5C17.5 5.27614 17.2761 5.5 17 5.5H3C2.72386 5.5 2.5 5.27614 2.5 5Z" fill="#9797AF"/>
                                     <path fill-rule="evenodd" clip-rule="evenodd" d="M3.4584 4.5H16.5059L15.6411 15.6926C15.5405 16.9947 14.4546 18 13.1486 18H6.84639C5.54299 18 4.45829 16.9986 4.35435 15.6994L3.4584 4.5ZM4.5416 5.5L5.35117 15.6196C5.41353 16.3992 6.06435 17 6.84639 17H13.1486C13.9322 17 14.5837 16.3968 14.6441 15.6155L15.4256 5.5H4.5416Z" fill="#9797AF"/>
                                     <path fill-rule="evenodd" clip-rule="evenodd" d="M13 5.5H7V3.46875C7 2.65758 7.65758 2 8.46875 2H11.5312C12.3424 2 13 2.65758 13 3.46875V5.5ZM8.46875 3C8.20987 3 8 3.20987 8 3.46875V4.5H12V3.46875C12 3.20987 11.7901 3 11.5312 3H8.46875Z" fill="#9797AF"/>
-                                    </svg>`
+                                    </svg>
+                                </div>`
         return adressItem;
     }
 }
