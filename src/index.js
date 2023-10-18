@@ -36,13 +36,6 @@ const totalDiscount = document.querySelector(".totalDiscount");
 const sidebarPickupPoint = document.querySelector(".sidebarPickupPoint");
 const sidebarDeliveryDate = document.querySelector(".sidebarDeliveryDate");
 
-// ноды инпутов
-const nameInput = document.querySelector(".cart-main-form__name");
-const surnameInput = document.querySelector(".cart-main-form__surname");
-const emailInput = document.querySelector(".cart-main-form__email");
-const phoneInput = document.querySelector(".cart-main-form__phone");
-const innInput = document.querySelector(".cart-main-form__inn");
-
 // кнопка отправки заказа 
 const sendOrderBtn = document.querySelector(".cart-sidebar__order-btn");
 
@@ -185,6 +178,14 @@ document.querySelector("#main-sidebar-payment-postpaid__checkbox").addEventListe
     }
 })
 
+// валидация формы и "отправка" заказа на сервер по нажатию кнопки "заказать"
+// ноды инпутов
+const nameInput = document.querySelector(".cart-main-form__name");
+const surnameInput = document.querySelector(".cart-main-form__surname");
+const emailInput = document.querySelector(".cart-main-form__email");
+const phoneInput = document.querySelector(".cart-main-form__phone");
+const innInput = document.querySelector(".cart-main-form__inn");
+
 sendOrderBtn.addEventListener("click", () => {
     let nameRegExp = /^[a-zA-Zа-яА-Я]+$/;
     emailRegExp = /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/iu;
@@ -195,6 +196,7 @@ sendOrderBtn.addEventListener("click", () => {
         order.recipient.name = nameInput.value;
     } else {
         nameInput.style.borderBottom = "1px solid red";
+        return;
     }
 
     if(surnameInput.value != "" && nameRegExp.test(surnameInput.value)) {
@@ -202,6 +204,7 @@ sendOrderBtn.addEventListener("click", () => {
         order.recipient.name = surnameInput.value;
     } else {
         surnameInput.style.borderBottom = "1px solid red";
+        return;
     }
 
     if(emailInput.value != "" && emailRegExp.test(emailInput.value)) {
@@ -209,6 +212,7 @@ sendOrderBtn.addEventListener("click", () => {
         order.recipient.name = emailInput.value;
     } else {
         emailInput.style.borderBottom = "1px solid red";
+        return;
     }
 
     if(phoneInput.value != "" && phoneRegExp.test(phoneInput.value)) {
@@ -216,9 +220,13 @@ sendOrderBtn.addEventListener("click", () => {
         order.recipient.name = phoneInput.value;
     } else {
         phoneInput.style.borderBottom = "1px solid red";
+        return;
     }
 
-    if(order.goods.length === 0) alert("Выберите товары");
+    if(order.goods.length === 0) {
+        alert("Выберите товары");
+        return;
+    }
 
     console.log("Данные отправлены");
     console.log(order);
@@ -232,20 +240,6 @@ document.querySelector(".showSidebarReturnDeliveryModal").addEventListener("clic
     document.querySelector(".main-sidebar-return-delivery-modal").classList.toggle("d-none");
 })
 
-// обработчики открытия модалок
-document.querySelector(".cart-main-delivery__options-btn").addEventListener("click", () => {
-    overlay.style.display = "flex";
-    deliveryModal.style.display = "block";
-})
-document.querySelector(".cart-main-payment__options-btn").addEventListener("click", () => {
-    overlay.style.display = "flex";
-    paymentModal.style.display = "block";
-})
-
-// обработчики закрытия модалок
-// overlay.addEventListener("click", (e) => e.target.closeModal());
-closePaymentModal.addEventListener("click", () => closeModal());
-closeDeliveryModal.addEventListener("click", () => closeModal());
 
 // функция, которая пересчитывает финальные показатели (общая цена, скидка, количество и тд) и записывает их в сайдбар 
 function getTotals(arr) {
