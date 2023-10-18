@@ -240,6 +240,22 @@ document.querySelector(".showSidebarReturnDeliveryModal").addEventListener("clic
     document.querySelector(".main-sidebar-return-delivery-modal").classList.toggle("d-none");
 })
 
+// обработчики открытия модалок
+document.querySelector(".cart-main-delivery__options-btn").addEventListener("click", () => {
+    overlay.style.display = "flex";
+    deliveryModal.style.display = "block";
+})
+document.querySelector(".cart-main-payment__options-btn").addEventListener("click", () => {
+    overlay.style.display = "flex";
+    paymentModal.style.display = "block";
+})
+
+// обработчики закрытия модалок
+overlay.addEventListener("click", (e) => {
+    if(e.target === overlay) closeModal()
+});
+closePaymentModal.addEventListener("click", () => closeModal());
+closeDeliveryModal.addEventListener("click", () => closeModal());
 
 // функция, которая пересчитывает финальные показатели (общая цена, скидка, количество и тд) и записывает их в сайдбар 
 function getTotals(arr) {
