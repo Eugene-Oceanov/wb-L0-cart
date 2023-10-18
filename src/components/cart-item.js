@@ -73,10 +73,11 @@ module.exports = {
     },
 
     paySystemItem: function(item) {
+        let counter = 0;
         const paySystemItem = document.createElement("DIV");
         paySystemItem.classList.add("payment-modal-item", "modal-item");
-        paySystemItem.innerHTML = `<input type="radio" name="modal-radio payment-modal-radio" id="radio1">
-                                    <label for="radio1" class="radio-label d-flex ai-center cursor-pointer">
+        paySystemItem.innerHTML = `<input type="radio" name="modal-radio payment-modal-radio" id="radio${counter}">
+                                    <label for="radio${counter}" class="radio-label payment-radio-label d-flex ai-center cursor-pointer">
                                         <div class="pseudo-radio"></div>${this.paySystemIcon(item.system)}${cartFuncs.hiddenCardNumber(item.cardNumber)}
                                     </label>`;
         return paySystemItem;

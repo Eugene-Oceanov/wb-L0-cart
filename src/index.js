@@ -45,7 +45,7 @@ let totalOriginalPrice = 0;
 let totalQuantitySum = 0;
 let totalDiscountSum = 0;
 
-// перебираем массив товаров, добавленных в корзину
+// перебор массива товаров из api корзины, добавление, удаление, изменение количества товаров в заказе 
 cart.then(data => {
     data.forEach(item => {
         if (item.remainder > 0) { // здесь вся логика, касающаяся товаров
@@ -101,10 +101,6 @@ cart.then(data => {
     getTotals(order.goods);
 });
 
-// я не совсем уверен, как устроен бэкенд в этом примере и нужна ли эта функция, ведь внизу страницы есть инпуты, которые все равно передают эти данные.
-// но что бы я мог сказать, что код "масштабируемый", что бы это не значило, и похвалить себя, зачем то написал. 
-// Ведь что бы сделать заказ, надо зарегистрироваться, а значит должен быть юзер. Наверное.
-// P.S. Вообще я знаю, что такое масштабируемый код, и это не он:)
 user.then(data => {
     order.recipient.name = data.name;
     order.recipient.surname = data.surname;
@@ -118,8 +114,13 @@ user.then(data => {
     cartMainPointSchedule.textContent = order.point.schedule;
     sidebarPickupPoint.textContent = order.point.adress;
 
-    order.recipient.payInfo.forEach(item => {
-        // if(item.system == "mir") 
+    data.payInfo.forEach(item => {
+        let paymentItem = cartItemLayout.paySystemItem(item);
+        document.querySelector(".payment-modal-radio-wrapper").append(paymentItem);
+        paymentItem.querySelector(".payment-radio-label").addEventListener("click", () => {
+            order.payInfo.card = item;
+            console.log(order);
+        })
     })
 })
 
