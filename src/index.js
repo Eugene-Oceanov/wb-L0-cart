@@ -43,6 +43,9 @@ const emailInput = document.querySelector(".cart-main-form__email");
 const phoneInput = document.querySelector(".cart-main-form__phone");
 const innInput = document.querySelector(".cart-main-form__inn");
 
+// кнопка отправки заказа 
+const sendOrderBtn = document.querySelector(".cart-sidebar__order-btn");
+
 // url api корзины и пользователя
 const cartJSON = "https://raw.githubusercontent.com/Eugene-Oceanov/wb-L0-cart/main/src/json/cart-api.json";
 const userJSON = "https://raw.githubusercontent.com/Eugene-Oceanov/wb-L0-cart/main/src/json/user.json";
@@ -123,6 +126,7 @@ cart.then(data => {
     getTotals(order.goods);
 });
 
+// логика обработки данных польз
 user.then(data => {
     order.recipient.name = data.name;
     order.recipient.surname = data.surname;
@@ -163,22 +167,61 @@ user.then(data => {
     data.adresses.forEach(item => {
         let adressItem = cartItemLayout.adressItem(item, deliveryCounter);
         deliveryModalWrapper.append(adressItem);
-        deliveryCounter++;
     })
 })
 
+// изменеие текста кнопки заказа по нажатию чекбокса постоплаты
 document.querySelector("#main-sidebar-payment-postpaid__checkbox").addEventListener("change", (e) => {
     if (e.target.checked) {
         let totalPrice = 0;
         order.goods.forEach(orderGood => {
             totalPrice += cartFuncs.getTotalPrice(orderGood.price, orderGood.discount, orderGood.quantity);
         })
-        document.querySelector(".cart-sidebar__order-btn").textContent = `Оплатить ${totalPrice.toLocaleString("ru")} сом`;
+        sendOrderBtn.textContent = `Оплатить ${totalPrice.toLocaleString("ru")} сом`;
         order.payInfo.postpaid = true;
     } else {
-        document.querySelector(".cart-sidebar__order-btn").textContent = "Заказать";
+        sendOrderBtn.textContent = "Заказать";
         order.payInfo.postpaid = false;
     }
+})
+
+sendOrderBtn.addEventListener("click", () => {
+    let nameRegExp = /^[a-zA-Zа-яА-Я]+$/;
+    emailRegExp = /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/iu;
+    phoneRegExp = /^([+]?[0-9\s-\(\)]{3,25})*$/i;
+
+    if(nameInput.value != "" && nameRegExp.test(nameInput.value)) {
+        nameInput.style.borderBottom = "1px solid var(--system-grey);";
+        order.recipient.name = nameInput.value;
+    } else {
+        nameInput.style.borderBottom = "1px solid red";
+    }
+
+    if(surnameInput.value != "" && nameRegExp.test(surnameInput.value)) {
+        surnameInput.style.borderBottom = "1px solid var(--system-grey);";
+        order.recipient.name = surnameInput.value;
+    } else {
+        surnameInput.style.borderBottom = "1px solid red";
+    }
+
+    if(emailInput.value != "" && emailRegExp.test(emailInput.value)) {
+        emailInput.style.borderBottom = "1px solid var(--system-grey);";
+        order.recipient.name = emailInput.value;
+    } else {
+        emailInput.style.borderBottom = "1px solid red";
+    }
+
+    if(phoneInput.value != "" && phoneRegExp.test(phoneInput.value)) {
+        phoneInput.style.borderBottom = "1px solid var(--system-grey);";
+        order.recipient.name = phoneInput.value;
+    } else {
+        phoneInput.style.borderBottom = "1px solid red";
+    }
+
+    if(order.goods.length === 0) alert("Выберите товары");
+
+    console.log("Данные отправлены");
+    console.log(order);
 })
 
 // логика открытия модалочек с информацией об обратной оплате
@@ -188,6 +231,21 @@ document.querySelector(".showMainCartReturnDeliveryModal").addEventListener("cli
 document.querySelector(".showSidebarReturnDeliveryModal").addEventListener("click", () => {
     document.querySelector(".main-sidebar-return-delivery-modal").classList.toggle("d-none");
 })
+
+// обработчики открытия модалок
+document.querySelector(".cart-main-delivery__options-btn").addEventListener("click", () => {
+    overlay.style.display = "flex";
+    deliveryModal.style.display = "block";
+})
+document.querySelector(".cart-main-payment__options-btn").addEventListener("click", () => {
+    overlay.style.display = "flex";
+    paymentModal.style.display = "block";
+})
+
+// обработчики закрытия модалок
+// overlay.addEventListener("click", (e) => e.target.closeModal());
+closePaymentModal.addEventListener("click", () => closeModal());
+closeDeliveryModal.addEventListener("click", () => closeModal());
 
 // функция, которая пересчитывает финальные показатели (общая цена, скидка, количество и тд) и записывает их в сайдбар 
 function getTotals(arr) {
@@ -210,11 +268,7 @@ function getTotals(arr) {
     totalDiscount.textContent = totalDiscountSum.toLocaleString("ru");
 }
 
-// обработчики закрытия модалок
-// overlay.addEventListener("click", (e) => e.target.closeModal());
-closePaymentModal.addEventListener("click", () => closeModal());
-closeDeliveryModal.addEventListener("click", () => closeModal());
-
+// функция закрытия модалок
 function closeModal() {
     paymentModal.style.display = "none";
     deliveryModal.style.display = "none";
