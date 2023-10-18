@@ -209,8 +209,12 @@ input[type=radio]:checked+.radio-label .pseudo-radio {
   border: .35em solid var(--system-magenta);
 }
 
-.delivery-modal {
+.payment-modal {
   display: none;
+}
+
+.delivery-modal {
+  /* display: none; */
   width: 37%;
 }
 

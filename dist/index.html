@@ -10,6 +10,45 @@
 <script defer src="index.js"></script></head>
 
 <body>
+    <!-- modals start -->
+    <div class="overlay d-flex jc-center ai-center cursor-pointer">
+
+        <div class="payment-modal modal">
+            <div class="modal-row d-flex jc-space-between ai-center">
+                <p class="payment-modal__title modal__title">Способ оплаты</p>
+                <svg class="close-payment-modal cursor-pointer" xmlns="http://www.w3.org/2000/svg" width="24"
+                    height="25" viewBox="0 0 24 25" fill="none">
+                    <path fill-rule="evenodd" clip-rule="evenodd"
+                        d="M4.92961 18.1568C4.53909 18.5473 4.53909 19.1805 4.92961 19.571C5.32014 19.9615 5.9533 19.9615 6.34383 19.571L12.0008 13.914L17.658 19.5711C18.0485 19.9616 18.6817 19.9616 19.0722 19.5711C19.4627 19.1806 19.4627 18.5474 19.0722 18.1569L13.4151 12.4998L19.0717 6.84309C19.4623 6.45257 19.4623 5.8194 19.0717 5.42888C18.6812 5.03835 18.0481 5.03836 17.6575 5.42888L12.0008 11.0856L6.34427 5.42899C5.95374 5.03846 5.32058 5.03846 4.93005 5.42899C4.53953 5.81951 4.53953 6.45267 4.93005 6.8432L10.5866 12.4998L4.92961 18.1568Z"
+                        fill="#9797AF" />
+                </svg>
+            </div>
+            <div class="payment-modal-radio-wrapper"></div>
+            <button class="modal__btn payment-modal__btn d-block">Выбрать</button>
+        </div>
+
+        <div class="delivery-modal modal">
+            <div class="modal-row d-flex jc-space-between ai-center">
+                <p class="delivery-modal__title modal__title">Способ доставки</p>
+                <svg class="close-delivery-modal cursor-pointer" xmlns="http://www.w3.org/2000/svg" width="24"
+                    height="25" viewBox="0 0 24 25" fill="none">
+                    <path fill-rule="evenodd" clip-rule="evenodd"
+                        d="M4.92961 18.1568C4.53909 18.5473 4.53909 19.1805 4.92961 19.571C5.32014 19.9615 5.9533 19.9615 6.34383 19.571L12.0008 13.914L17.658 19.5711C18.0485 19.9616 18.6817 19.9616 19.0722 19.5711C19.4627 19.1806 19.4627 18.5474 19.0722 18.1569L13.4151 12.4998L19.0717 6.84309C19.4623 6.45257 19.4623 5.8194 19.0717 5.42888C18.6812 5.03835 18.0481 5.03836 17.6575 5.42888L12.0008 11.0856L6.34427 5.42899C5.95374 5.03846 5.32058 5.03846 4.93005 5.42899C4.53953 5.81951 4.53953 6.45267 4.93005 6.8432L10.5866 12.4998L4.92961 18.1568Z"
+                        fill="#9797AF" />
+                </svg>
+            </div>
+            <div class="modal-row d-flex jc-space-between">
+                <p class="delivery-modal__point-way delivery-modal__way-item">В пункт выдачи</p>
+                <p class="delivery-modal__courier-way delivery-modal__way-item">Курьером</p>
+            </div>
+            <p class="delivery-modal__heading">Мои адреса</p>
+            <div class="modal-delivery-adresses-wrapper"></div>
+
+            <button class="modal__btn delivery-modal__btn d-block">Выбрать</button>
+        </div>
+    </div>
+
+    <!-- modals end -->
 
     <!-- header start -->
     <header id="header">
@@ -37,7 +76,8 @@
             <nav class="header__nav d-flex jc-space-between">
                 <a href="#"
                     class="header__nav--profile-link header__nav--item d-flex fd-column jc-space-between ai-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none"
+                        class="header__nav__icon">
                         <path fill-rule="evenodd" clip-rule="evenodd"
                             d="M14.5207 5.28873C14.5207 8.05869 12.4361 10.2066 10.006 10.2066C7.57586 10.2066 5.49117 8.05869 5.49117 5.31221C5.47931 2.60094 7.58777 0.5 10.006 0.5C12.4241 0.5 14.5207 2.55399 14.5207 5.28873ZM0.5 18.9977C0.5 19.9836 1.14326 20.5 2.94201 20.5H17.058C18.8567 20.5 19.5 19.9836 19.5 18.9977C19.5 16.1338 15.8429 12.1901 10.006 12.1901C4.15705 12.1901 0.5 16.1338 0.5 18.9977Z"
                             fill="white" />
@@ -45,7 +85,8 @@
                     <p>Профиль</p>
                 </a>
                 <a href="#" class="header__nav--cart-link header__nav--item">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="29" viewBox="0 0 28 29" fill="none">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="29" viewBox="0 0 28 29" fill="none"
+                        class="header__nav__icon">
                         <path fill-rule="evenodd" clip-rule="evenodd"
                             d="M11.2214 17.4665C11.3829 17.9206 11.8452 18.1949 12.3212 18.119L25.0874 16.0828C25.5004 16.017 25.8288 15.701 25.9106 15.2909L27.2654 8.49865C27.3875 7.88644 26.925 7.31324 26.3008 7.30317L8.94122 7.02324C8.24354 7.01199 7.74913 7.70067 7.98289 8.35812L11.2214 17.4665Z"
                             fill="white" />
@@ -77,7 +118,7 @@
                 <div class="cart-aviable">
                     <div class="cart-aviable__hide-block d-flex ai-center">
                         <input type="checkbox" id="cart-aviable__choose-all-input" checked>
-                        <label for="cart-aviable__choose-all-input"></label>
+                        <label for="cart-aviable__choose-all-input" class="cb-label"></label>
                         <p>Выбрать все</p>
                     </div>
                     <div class="cart-aviable__container"></div>
@@ -100,7 +141,7 @@
                     <div class="cart-main-delivery-point cart-main-delivery__row d-flex">
                         <p class="cart-main-delivery-point__title cart-main-delivery__text-block">Пункт выдачи</p>
                         <div class="cart-main-delivery-point-info">
-                            <p class="cart-main-delivery-point-info__adress">Бишкек, улица Ахматбека Суюмбаева, 12/1</p>
+                            <p class="cart-main-delivery-point-info__adress cartMainPointAdress"></p>
                             <div class="cart-main-delivery-point-info__rating">
                                 <span>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12"
@@ -109,9 +150,9 @@
                                             d="M6.69769 1.14922C6.43817 0.528396 5.56198 0.528387 5.30244 1.14919L6.69769 1.14922ZM5.30244 1.14919L4.14719 3.90977L1.19202 4.16613C0.519264 4.22467 0.262282 5.05966 0.759713 5.49464L3.00514 7.45915L2.33207 10.3824C2.18436 11.0238 2.87792 11.5567 3.46133 11.2023L6.00032 9.65611L8.53797 11.2015C9.12269 11.5588 9.81568 11.0227 9.66861 10.3826L8.99549 7.45915L11.2402 5.49537C11.7385 5.05961 11.4793 4.22519 10.8083 4.16667L7.85294 3.91029L6.69769 1.14922"
                                             fill="#FF970D" />
                                     </svg>
-                                    4.99
+                                    <span class="cartMainPointRating"></span>
                                 </span>
-                                <span>Ежедневно с 10 до 21</span>
+                                <span class="cartMainPointSchedule">Ежедневно с 10 до 21</span>
                             </div>
                         </div>
                     </div>
@@ -161,8 +202,10 @@
                             </defs>
                         </svg>
                         <p class="cart-main-delivery-return__info">Обратная доставка товаров на склад при отказе —
-                            <span>бесплатно</span>
+                            <span class="showMainCartReturnDeliveryModal cursor-pointer">бесплатно</span>
                         </p>
+                        <div class="cart-main-delivery-return-modal d-none">Если товары вам не подойдут, мы вернем
+                            их обратно на склад — это бесплатно</div>
                     </div>
                 </div>
 
@@ -172,31 +215,9 @@
                         <button class="cart-main-payment__options-btn cart-main-section__options-btn">Изменить</button>
                     </div>
                     <div class="cart-main-payment-card d-flex ai-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="10" viewBox="0 0 30 10" fill="none">
-                            <path
-                                d="M16.6811 1.84383L14.8643 5.75836H14.6805V1.00037H12.0851V9.00245H14.2371C14.8211 9.00245 15.3402 8.66723 15.5889 8.14817L17.4165 4.24445H17.6004V9.00245H20.1958V1.00037H18.0113C17.449 1.00037 16.9191 1.33559 16.6811 1.84383Z"
-                                fill="#319B42" />
-                            <path
-                                d="M6.97243 2.04929L5.90182 5.75836H5.71798L4.63656 2.04929C4.45271 1.4221 3.87956 1.00037 3.2307 1.00037H0.667725V9.00245H3.26315V4.24445H3.44699L4.93935 9.00245H6.66963L8.162 4.24445H8.34584V9.00245H10.9413V1.00037H8.37829C7.72943 1.00037 7.14546 1.4221 6.97243 2.04929Z"
-                                fill="#319B42" />
-                            <path
-                                d="M21.3243 4.56745V9.00245H23.9206V6.40635H26.7115C27.9231 6.40635 28.9508 5.63834 29.3294 4.56745H21.3243Z"
-                                fill="#319B42" />
-                            <path
-                                d="M26.6357 1.00037H20.859C21.216 2.90417 22.8819 4.24549 24.8832 4.24549H29.3725C29.405 4.07241 29.4266 3.87771 29.4266 3.683C29.4266 2.13616 28.1826 1.00037 26.6357 1.00037Z"
-                                fill="url(#paint0_linear_7_2283)" />
-                            <defs>
-                                <linearGradient id="paint0_linear_7_2283" x1="20.859" y1="2.62293" x2="29.4266"
-                                    y2="2.62293" gradientUnits="userSpaceOnUse">
-                                    <stop stop-color="#00A3E1" />
-                                    <stop offset="0.3042" stop-color="#009ADD" />
-                                    <stop offset="0.7987" stop-color="#0082D4" />
-                                    <stop offset="1" stop-color="#0076CF" />
-                                </linearGradient>
-                            </defs>
-                        </svg>
-                        <p class="cart-main-payment__card-number">1234 56•• •••• 1234</p>
-                        <p class="cart-main-payment__card-validity">01/30</p>
+                        <div class="cart-main-payment-card-system-icon"></div>
+                        <p class="cart-main-payment__card-number"></p>
+                        <p class="cart-main-payment__card-validity"></p>
                     </div>
                     <p class="cart-main-payment__write-off">Спишем оплату с карты при получении</p>
                 </div>
@@ -231,24 +252,26 @@
             <section class="cart-sidebar">
                 <div class="main-sidebar-summary-price main-sidebar__row d-flex jc-space-between">
                     <p class="main-sidebar-summary-price__text">Итого</p>
-                    <p class="main-sidebar-summary-price__price">2 101 063 <span class="valute">сом</span></p>
+                    <p class="main-sidebar-summary-price__price"><span class="totalPrice"></span> сом</p>
                 </div>
                 <div class="main-sidebar-total main-sidebar__row d-flex jc-space-between">
-                    <p class="main-sidebar-total__quantity">203 товара</p>
-                    <p class="main-sidebar-total__original-price">2 302 048 сом</p>
+                    <p class="main-sidebar-total__quantity goodsQuantity"></p>
+                    <p class="main-sidebar-total__original-price"><span class="originalPrice">2 302 048</span> сом</p>
                 </div>
                 <div class="main-sidebar-discount main-sidebar__row d-flex jc-space-between">
                     <p class="main-sidebar-discount__text">Скидка</p>
-                    <p class="main-sidebar-discount__discount-summary">-200 985 сом</p>
+                    <p class="main-sidebar-discount__discount-summary"><span class="totalDiscount">-200 985</span> сом
+                    </p>
                 </div>
                 <div class="main-sidebar-delivery main-sidebar__row d-flex jc-space-between">
                     <p class="main-sidebar-delivery__text">Доставка</p>
-                    <p class="main-sidebar-delivery__delivery-price">Бесплатно</p>
+                    <p class="main-sidebar-delivery__delivery-price ">Бесплатно</p>
                 </div>
                 <div class="main-sidebar-pickup-point">
                     <p class="main-sidebar-pickup-point__title">Доставка в пункт выдачи</p>
-                    <p class="main-sidebar-pickup-point__point">Бишкек, улица Ахматбека Суюмбаева, 12/1</p>
-                    <p class="main-sidebar-pickup-point__delivery-date">5-8 фев</p>
+                    <p class="main-sidebar-pickup-point__point sidebarPickupPoint">Бишкек, улица Ахматбека Суюмбаева,
+                        12/1</p>
+                    <p class="main-sidebar-pickup-point__delivery-date sidebarDeliveryDate">5-8 фев</p>
                     <div class="main-sidebar-return-delivery d-flex ai-center">
                         <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none">
                             <path fill-rule="evenodd" clip-rule="evenodd"
@@ -271,8 +294,10 @@
                             </defs>
                         </svg>
                         <p class="main-sidebar-return-delivery__info">Обратная доставка товаров на склад при отказе -
-                            <span>бесплатно</span>
+                            <span class="showSidebarReturnDeliveryModal cursor-pointer">бесплатно</span>
                         </p>
+                        <div class="main-sidebar-return-delivery-modal d-none">Если товары вам не подойдут, мы вернем
+                            их обратно на склад — это бесплатно</div>
                     </div>
                 </div>
                 <div class="main-sidebar-payment">
@@ -302,12 +327,11 @@
                             </defs>
                         </svg>
                         <p class="main-sidebar-payment-card__number">
-                            1234 12•• •••• 1234
                         </p>
                     </div>
                     <div class="main-sidebar-payment-postpaid">
                         <input type="checkbox" id="main-sidebar-payment-postpaid__checkbox">
-                        <label for="main-sidebar-payment-postpaid__checkbox"><span
+                        <label for="main-sidebar-payment-postpaid__checkbox" class="cb-label"><span
                                 class="main-sidebar-payment-postpaid__description">Списать оплату сразу</span></label>
                         <p class="main-sidebar-payment-postpaid__info">Спишем оплату с карты при получении</p>
                     </div>
@@ -323,14 +347,17 @@
                             площадкой</a>
                         и <a href="#">возврата</a></p>
                 </div>
-
             </section>
         </div>
     </main>
     <!-- main end -->
 
     <!-- footer start -->
-    <footer id="footer"></footer>
+    <footer id="footer">
+        <div class="container d-flex jc-center ai-center">
+            <p class="footer__text">© 2022 ООО «Товары и точка»</p>
+        </div>
+    </footer>
     <!-- footer end -->
 
 

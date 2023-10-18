@@ -163,7 +163,7 @@ user.then(data => {
     data.adresses.forEach(item => {
         let adressItem = cartItemLayout.adressItem(item, deliveryCounter);
         deliveryModalWrapper.append(adressItem);
-        
+        deliveryCounter++;
     })
 })
 
@@ -211,12 +211,12 @@ function getTotals(arr) {
 }
 
 // обработчики закрытия модалок
-overlay.addEventListener("click", () => closeModal());
+// overlay.addEventListener("click", (e) => e.target.closeModal());
 closePaymentModal.addEventListener("click", () => closeModal());
 closeDeliveryModal.addEventListener("click", () => closeModal());
 
 function closeModal() {
-    paymentModal.style.display="none";
-    deliveryModal.style.display="none";
-    overlay.style.display="none";
+    paymentModal.style.display = "none";
+    deliveryModal.style.display = "none";
+    overlay.style.display = "none";
 }
