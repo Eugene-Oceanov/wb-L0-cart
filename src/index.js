@@ -113,14 +113,14 @@ user.then(data => {
     cartMainPointRating.textContent = order.point.rating;
     cartMainPointSchedule.textContent = order.point.schedule;
     sidebarPickupPoint.textContent = order.point.adress;
-
+    let counter = 0;
     data.payInfo.forEach(item => {
-        let paymentItem = cartItemLayout.paySystemItem(item);
+        let paymentItem = cartItemLayout.paySystemItem(item, counter);
         document.querySelector(".payment-modal-radio-wrapper").append(paymentItem);
         paymentItem.querySelector(".payment-radio-label").addEventListener("click", () => {
             order.payInfo.card = item;
-            console.log(order);
         })
+        counter += 1;
     })
 })
 

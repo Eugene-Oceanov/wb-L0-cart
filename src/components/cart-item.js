@@ -72,8 +72,7 @@ module.exports = {
         return cartItemNotAviable1;
     },
 
-    paySystemItem: function(item) {
-        let counter = 0;
+    paySystemItem: function (item, counter) {
         const paySystemItem = document.createElement("DIV");
         paySystemItem.classList.add("payment-modal-item", "modal-item");
         paySystemItem.innerHTML = `<input type="radio" name="modal-radio payment-modal-radio" id="radio${counter}">
@@ -83,8 +82,8 @@ module.exports = {
         return paySystemItem;
     },
 
-    paySystemIcon: function(title) {
-        if(title == "mir") {
+    paySystemIcon: function (title) {
+        if (title == "mir") {
             return `<svg class="pay-system-icon" xmlns="http://www.w3.org/2000/svg" width="30" height="11" viewBox="0 0 30 11" fill="none">
                 <path d="M16.682 2.34377L14.8652 6.2583H14.6814V1.50031H12.0859V9.50239H14.238C14.8219 9.50239 15.341 9.16717 15.5898 8.64811L17.4174 4.74439H17.6012V9.50239H20.1966V1.50031H18.0121C17.4498 1.50031 16.9199 1.83553 16.682 2.34377Z" fill="#319B42"/>
                 <path d="M6.97268 2.54923L5.90207 6.2583H5.71823L4.6368 2.54923C4.45296 1.92204 3.8798 1.50031 3.23095 1.50031H0.667969V9.50239H3.26339V4.74439H3.44723L4.9396 9.50239H6.66988L8.16225 4.74439H8.34609V9.50239H10.9415V1.50031H8.37853C7.72968 1.50031 7.14571 1.92204 6.97268 2.54923Z" fill="#319B42"/>
