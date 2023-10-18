@@ -12,7 +12,7 @@ const closePaymentModal = document.querySelector(".close-payment-modal");
 const paymentModalWrapper = document.querySelector(".payment-modal-radio-wrapper");
 const paymentModalBtn = document.querySelector(".payment-modal__btn");
 
-const deliveryModal = document.querySelector(".")
+// const deliveryModal = document.querySelector(".")
 
 // ноды для вывода карточек товаров доступных и недоступных к заказу
 const cartAviable = document.querySelector(".cart-aviable__container");
