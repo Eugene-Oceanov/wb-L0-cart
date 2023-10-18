@@ -34,6 +34,9 @@ const order = {
     recipient: {},
     point: "",
     goods: [],
+    payInfo: {
+        postpaid: false
+    }
 }
 
 // 4 всадника апокалипсиса
@@ -108,8 +111,8 @@ user.then(data => {
     order.recipient.eMail = data.eMail;
     order.recipient.phone = data.phone;
     order.recipient.inn = data.inn;
-    order.recipient.payInfo = data.payInfo;
     order.point = data.pickUpPoint;
+    order.payInfo.card = data.payInfo[0];
     cartMainPointAdress.textContent = order.point.adress;
     cartMainPointRating.textContent = order.point.rating;
     cartMainPointSchedule.textContent = order.point.schedule;
@@ -127,7 +130,11 @@ document.querySelector("#main-sidebar-payment-postpaid__checkbox").addEventListe
             totalPrice += cartFuncs.getTotalPrice(orderGood.price, orderGood.discount, orderGood.quantity);
         })
         document.querySelector(".cart-sidebar__order-btn").textContent = `Оплатить ${totalPrice.toLocaleString("ru")} сом`;
-    } else document.querySelector(".cart-sidebar__order-btn").textContent = "Заказать";
+        order.payInfo.postpaid = true;
+    } else {
+        document.querySelector(".cart-sidebar__order-btn").textContent = "Заказать";
+        order.payInfo.postpaid = false;
+    }
 })
 
 // логика открытия модалочек с информацией об обратной оплате
