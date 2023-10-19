@@ -33,9 +33,9 @@ const order = {
 
 // окончательные показатели
 let totalPriceSum,
- totalOriginalPrice,
- totalQuantitySum,;
- totalDiscountSum = 0;
+    totalOriginalPrice,
+    totalQuantitySum,
+    totalDiscountSum = 0;
 
 // перебор массива товаров из api корзины, добавление, удаление, изменение количества товаров в заказе 
 cartFuncs.getData("https://raw.githubusercontent.com/Eugene-Oceanov/wb-L0-cart/main/src/json/cart-api.json").then(data => {
@@ -169,7 +169,7 @@ sendOrderBtn.addEventListener("click", () => {
         alert("Выберите товары");
         return;
     }
-    if(controlValidation != "invalid") {
+    if (controlValidation != "invalid") {
         console.log("Заказ отправлены");
         console.log(order);
     } else return
