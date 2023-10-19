@@ -6,49 +6,20 @@ const cartFuncs = require("./modules/cart-funcs.js"); // модуль с нес�
 
 // ноды модалок
 const overlay = document.querySelector(".overlay");
-
 const paymentModal = document.querySelector(".payment-modal");
-const closePaymentModal = document.querySelector(".close-payment-modal");
 const paymentModalWrapper = document.querySelector(".payment-modal-radio-wrapper");
 const paymentModalBtn = document.querySelector(".payment-modal__btn");
-
 const deliveryModal = document.querySelector(".delivery-modal");
-const closeDeliveryModal = document.querySelector(".close-delivery-modal");
 const deliveryModalPointBtn = document.querySelector(".modal-delivery__point-way");
 const deliveryCourierPointBtn = document.querySelector(".modal-delivery__courier-way");
 const deliveryModalWrapper = document.querySelector(".modal-delivery-adresses-wrapper");
 const deliveryModalBtn = document.querySelector(".delivery-modal__btn");
-
-// ноды для вывода карточек товаров доступных и недоступных к заказу
-const cartAviable = document.querySelector(".cart-aviable__container");
-const cartNotAviable = document.querySelector(".cart-not-aviable__container");
-
-// ноды в самой корзине для вывода нижеуказанных данных
-const cartMainPointAdress = document.querySelector(".cartMainPointAdress");
-const cartMainPointRating = document.querySelector(".cartMainPointRating");
-const cartMainPointSchedule = document.querySelector(".cartMainPointSchedule");
-
-// ноды в сайдбаре для вывода нижеуказанных данных
-const totalPrice = document.querySelector(".totalPrice");
-const goodsQuantity = document.querySelector(".goodsQuantity");
-const originalPrice = document.querySelector(".originalPrice");
-const totalDiscount = document.querySelector(".totalDiscount");
-const sidebarPickupPoint = document.querySelector(".sidebarPickupPoint");
-const sidebarDeliveryDate = document.querySelector(".sidebarDeliveryDate");
 
 // кнопка отправки заказа 
 const sendOrderBtn = document.querySelector(".cart-sidebar__order-btn");
 
 // мелкие ноды
 const headerCounter = document.querySelector(".header-nav__cart-counter");
-
-// url api корзины и пользователя
-const cartJSON = "https://raw.githubusercontent.com/Eugene-Oceanov/wb-L0-cart/main/src/json/cart-api.json";
-const userJSON = "https://raw.githubusercontent.com/Eugene-Oceanov/wb-L0-cart/main/src/json/user.json";
-
-// получаем корзину и пользователя из api
-const cart = cartFuncs.getData(cartJSON);
-const user = cartFuncs.getData(userJSON);
 
 // объект заказа, который должен отправляться на сервер, когда пользователь нажимает кнопку "заказать"
 const order = {
@@ -61,22 +32,21 @@ const order = {
 }
 
 // окончательные показатели
-let totalPriceSum = 0;
-let totalOriginalPrice = 0;
-let totalQuantitySum = 0;
-let totalDiscountSum = 0;
+let totalPriceSum,
+ totalOriginalPrice,
+ totalQuantitySum,;
+ totalDiscountSum = 0;
 
 // перебор массива товаров из api корзины, добавление, удаление, изменение количества товаров в заказе 
-cart.then(data => {
+cartFuncs.getData("https://raw.githubusercontent.com/Eugene-Oceanov/wb-L0-cart/main/src/json/cart-api.json").then(data => {
     data.forEach(item => {
         if (item.remainder > 0) { // здесь вся логика, касающаяся товаров, доступных к заказу
             order.goods.push(item); // поскольку чекбоксы заранее в положении checked, сразу добавляем эти товары в заказ
             let orderGood = order.goods[order.goods.indexOf(item)]; //Переменная, которая обращается к элементу заказа, который является именно этим объектом
             const cartItem = layouts.fullCartItem(item); // отрисовываем верстку товаров корзины доступных к заказу
-            cartAviable.append(cartItem);
-            const cartItemCheckbox = cartItem.querySelector(".cartItemCheckbox");
-            cartItemCheckbox.addEventListener("change", () => { // логика добавления товаров в заказ по нажатию на чекбоксы
-                if (cartItemCheckbox.checked) {
+            document.querySelector(".cart-aviable__container").append(cartItem);
+            cartItem.querySelector(".cartItemCheckbox").addEventListener("change", (e) => { // логика добавления товаров в заказ по нажатию на чекбоксы
+                if (e.target.checked) {
                     order.goods.push(item);
                     headerCounter.textContent = order.goods.length;
                     getTotals(order.goods);
@@ -87,14 +57,12 @@ cart.then(data => {
                 }
             })
             // логика изменения количества товаров в заказе по кнопкам + и - в карточке товара
-            const quantityIncrease = cartItem.querySelector(".quantityIncrease");
-            const quantityLower = cartItem.querySelector(".quantityLower");
             const quantityValue = cartItem.querySelector(".quantityValue");
             const itemFinalPrice = cartItem.querySelector(".itemFinalPrice");
             const itemOriginalPrice = cartItem.querySelector(".itemOriginalPrice");
             const quantityRemainder = cartItem.querySelector(".quantityRemainder");
 
-            quantityLower.addEventListener("click", () => { // нажатие на минус
+            cartItem.querySelector(".quantityLower").addEventListener("click", () => { // нажатие на минус
                 if (orderGood.quantity > 0) {
                     orderGood.quantity--;
                     orderGood.remainder++;
@@ -105,7 +73,7 @@ cart.then(data => {
                     getTotals(order.goods);
                 } else return;
             })
-            quantityIncrease.addEventListener("click", () => { //нажатие на плюс
+            cartItem.querySelector(".quantityIncrease").addEventListener("click", () => { //нажатие на плюс
                 if (orderGood.quantity < (orderGood.quantity + orderGood.remainder)) {
                     orderGood.quantity++;
                     orderGood.remainder--;
@@ -118,26 +86,21 @@ cart.then(data => {
             })
         } else if (item.remainder === 0) { // отрисовываем верстку товаров корзины НЕ доступных к заказу
             const cartItemNotAviable = layouts.cartItemNotAviable(item);
-            cartNotAviable.append(cartItemNotAviable)
+            document.querySelector(".cart-not-aviable__container").append(cartItemNotAviable)
         }
     })
     headerCounter.textContent = order.goods.length;
     getTotals(order.goods);
 });
 
-// логика обработки данных польз
-user.then(data => {
-    order.recipient.name = data.name;
-    order.recipient.surname = data.surname;
-    order.recipient.eMail = data.eMail;
-    order.recipient.phone = data.phone;
-    order.recipient.inn = data.inn;
+// логика обработки данных пользователя
+cartFuncs.getData("https://raw.githubusercontent.com/Eugene-Oceanov/wb-L0-cart/main/src/json/user.json").then(data => {
     order.point = data.pickUpPoint;
     order.payInfo.card = data.payInfo[0];
-    cartMainPointAdress.textContent = order.point.adress;
-    cartMainPointRating.textContent = order.point.rating;
-    cartMainPointSchedule.textContent = order.point.schedule;
-    sidebarPickupPoint.textContent = order.point.adress;
+    document.querySelector(".cartMainPointAdress").textContent = order.point.adress;
+    document.querySelector(".cartMainPointRating").textContent = order.point.rating;
+    document.querySelector(".cartMainPointSchedule").textContent = order.point.schedule;
+    document.querySelector(".sidebarPickupPoint").textContent = order.point.adress;
 
     let paymentCounter = 0;
     let currentCard = "";
@@ -162,11 +125,11 @@ user.then(data => {
         console.log(order);
     })
 
-    let deliveryCounter = 0;
+    let adressesCounter = 0;
     data.adresses.forEach(item => {
-        let adressItem = layouts.adressItem(item, deliveryCounter);
+        let adressItem = layouts.adressItem(item, adressesCounter);
         deliveryModalWrapper.append(adressItem);
-        deliveryCounter++;
+        adressesCounter++;
     })
 })
 
@@ -191,69 +154,26 @@ const nameInput = document.querySelector(".cart-main-form__name");
 const surnameInput = document.querySelector(".cart-main-form__surname");
 const emailInput = document.querySelector(".cart-main-form__email");
 const phoneInput = document.querySelector(".cart-main-form__phone");
-const innInput = document.querySelector(".cart-main-form__inn");
+// регулярные выражения для валидации
+let nameRegExp = /^[a-zA-Zа-яА-Я]+$/;
+let emailRegExp = /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/iu;
+let phoneRegExp = /^([+]?[0-9\s-\(\)]{3,25})*$/i;
 
 sendOrderBtn.addEventListener("click", () => {
-    let nameRegExp = /^[a-zA-Zа-яА-Я]+$/;
-    let emailRegExp = /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/iu;
-    let phoneRegExp = /^([+]?[0-9\s-\(\)]{3,25})*$/i;
-
-    if (nameInput.value != "" && nameRegExp.test(nameInput.value)) {
-        document.querySelector(".cart-main-form__invalid-name").style.display = "none";
-        nameInput.style.borderBottom = "1px solid var(--system-grey);";
-        order.recipient.name = nameInput.value;
-    } else {
-        document.querySelector(".cart-main-form__invalid-name").style.display = "block";
-        nameInput.style.borderBottom = "1px solid red";
-        return;
-    }
-
-    if (surnameInput.value != "" && nameRegExp.test(surnameInput.value)) {
-        document.querySelector(".cart-main-form__invalid-surname").style.display = "none";
-        surnameInput.style.borderBottom = "1px solid var(--system-grey);";
-        order.recipient.surname = surnameInput.value;
-    } else {
-        document.querySelector(".cart-main-form__invalid-surname").style.display = "block";
-        surnameInput.style.borderBottom = "1px solid red";
-        return;
-    }
-
-    if (emailInput.value != "" && emailRegExp.test(emailInput.value)) {
-        document.querySelector(".cart-main-form__invalid-email").style.display = "none";
-        emailInput.style.borderBottom = "1px solid var(--system-grey);";
-        order.recipient.eMail = emailInput.value;
-    } else {
-        document.querySelector(".cart-main-form__invalid-email").style.display = "block";
-        emailInput.style.borderBottom = "1px solid red";
-        return;
-    }
-
-    if (phoneInput.value != "" && phoneRegExp.test(phoneInput.value)) {
-        document.querySelector(".cart-main-form__invalid-phone").style.display = "none";
-        phoneInput.style.borderBottom = "1px solid var(--system-grey);";
-        order.recipient.phone = phoneInput.value;
-    } else {
-        document.querySelector(".cart-main-form__invalid-phone").style.display = "block";
-        phoneInput.style.borderBottom = "1px solid red";
-        return;
-    }
-
+    let controlValidation = "";
+    cartFuncs.validateInput(nameRegExp, nameInput, document.querySelector(".cart-main-form__invalid-name"), order.recipient.name, controlValidation);
+    cartFuncs.validateInput(nameRegExp, surnameInput, document.querySelector(".cart-main-form__invalid-surname"), order.recipient.surname, controlValidation);
+    cartFuncs.validateInput(emailRegExp, emailInput, document.querySelector(".cart-main-form__invalid-email"), order.recipient.eMail, controlValidation);
+    cartFuncs.validateInput(phoneRegExp, phoneInput, document.querySelector(".cart-main-form__invalid-phone"), order.recipient.phone, controlValidation);
     if (order.goods.length === 0) {
         alert("Выберите товары");
         return;
     }
-
-    console.log("Данные отправлены");
-    console.log(order);
+    if(controlValidation != "invalid") {
+        console.log("Заказ отправлены");
+        console.log(order);
+    } else return
 })
-
-// // логика открытия модалочек с информацией об обратной оплате
-// document.querySelector(".showMainCartReturnDeliveryModal").addEventListener("click", () => {
-//     document.querySelector(".cart-main-delivery-return-modal").classList.toggle("d-none");
-// })
-// document.querySelector(".showSidebarReturnDeliveryModal").addEventListener("click", () => {
-//     document.querySelector(".main-sidebar-return-delivery-modal").classList.toggle("d-none");
-// })
 
 // обработчики открытия модалок
 document.querySelector(".cart-main-delivery__options-btn").addEventListener("click", () => {
@@ -269,8 +189,8 @@ document.querySelector(".cart-main-payment__options-btn").addEventListener("clic
 overlay.addEventListener("click", (e) => {
     if (e.target === overlay) closeModal()
 });
-closePaymentModal.addEventListener("click", () => closeModal());
-closeDeliveryModal.addEventListener("click", () => closeModal());
+document.querySelector(".close-payment-modal").addEventListener("click", () => closeModal());
+document.querySelector(".close-delivery-modal").addEventListener("click", () => closeModal());
 
 // функция, которая пересчитывает финальные показатели (общая цена, скидка, количество и тд) и записывает их в сайдбар 
 function getTotals(arr) {
@@ -287,10 +207,10 @@ function getTotals(arr) {
         totalDiscountSum += cartFuncs.getDiscount(orderGood.price, orderGood.discount, orderGood.quantity);
     })
     // передаем переопределенные показатели в ноды
-    totalPrice.textContent = totalPriceSum.toLocaleString("ru");
-    goodsQuantity.textContent = `${totalQuantitySum.toLocaleString("ru")} товара`;
-    originalPrice.textContent = totalOriginalPrice.toLocaleString("ru");
-    totalDiscount.textContent = totalDiscountSum.toLocaleString("ru");
+    document.querySelector(".totalPrice").textContent = totalPriceSum.toLocaleString("ru");
+    document.querySelector(".goodsQuantity").textContent = `${totalQuantitySum.toLocaleString("ru")} товара`;
+    document.querySelector(".originalPrice").textContent = totalOriginalPrice.toLocaleString("ru");
+    document.querySelector(".totalDiscount").textContent = totalDiscountSum.toLocaleString("ru");
 }
 
 // функция закрытия модалок

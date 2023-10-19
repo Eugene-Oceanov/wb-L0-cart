@@ -24,5 +24,17 @@ module.exports = {
             else newString.push(num[i]);
         }
         return newString.join("");
-    }
+    },
+
+    validateInput: function(regExp, input, errorOutput, objectVar, controlVar) {
+        if (input.value != "" && regExp.test(input.value)) {
+            errorOutput.style.display = "none";
+            input.style.borderBottom = "1px solid var(--system-grey);";
+            objectVar = input.value;
+        } else {
+            errorOutput.style.display = "block";
+            input.style.borderBottom = "1px solid red";
+            controlVar = "invalid";
+        }
+    },
 }
