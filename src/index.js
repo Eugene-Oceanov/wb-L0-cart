@@ -39,6 +39,9 @@ const sidebarDeliveryDate = document.querySelector(".sidebarDeliveryDate");
 // кнопка отправки заказа 
 const sendOrderBtn = document.querySelector(".cart-sidebar__order-btn");
 
+// мелкие ноды
+const headerCounter = document.querySelector(".header-nav__cart-counter");
+
 // url api корзины и пользователя
 const cartJSON = "https://raw.githubusercontent.com/Eugene-Oceanov/wb-L0-cart/main/src/json/cart-api.json";
 const userJSON = "https://raw.githubusercontent.com/Eugene-Oceanov/wb-L0-cart/main/src/json/user.json";
@@ -57,7 +60,7 @@ const order = {
     }
 }
 
-// 4 всадника апокалипсиса
+// окончательные показатели
 let totalPriceSum = 0;
 let totalOriginalPrice = 0;
 let totalQuantitySum = 0;
@@ -66,7 +69,7 @@ let totalDiscountSum = 0;
 // перебор массива товаров из api корзины, добавление, удаление, изменение количества товаров в заказе 
 cart.then(data => {
     data.forEach(item => {
-        if (item.remainder > 0) { // здесь вся логика, касающаяся товаров
+        if (item.remainder > 0) { // здесь вся логика, касающаяся товаров, доступных к заказу
             order.goods.push(item); // поскольку чекбоксы заранее в положении checked, сразу добавляем эти товары в заказ
             let orderGood = order.goods[order.goods.indexOf(item)]; //Переменная, которая обращается к элементу заказа, который является именно этим объектом
             const cartItem = layouts.fullCartItem(item); // отрисовываем верстку товаров корзины доступных к заказу
@@ -75,9 +78,11 @@ cart.then(data => {
             cartItemCheckbox.addEventListener("change", () => { // логика добавления товаров в заказ по нажатию на чекбоксы
                 if (cartItemCheckbox.checked) {
                     order.goods.push(item);
+                    headerCounter.textContent = order.goods.length;
                     getTotals(order.goods);
                 } else {
                     order.goods.splice(order.goods.indexOf(item), 1);
+                    headerCounter.textContent = order.goods.length;
                     getTotals(order.goods);
                 }
             })
@@ -116,6 +121,7 @@ cart.then(data => {
             cartNotAviable.append(cartItemNotAviable)
         }
     })
+    headerCounter.textContent = order.goods.length;
     getTotals(order.goods);
 });
 
@@ -193,33 +199,41 @@ sendOrderBtn.addEventListener("click", () => {
     let phoneRegExp = /^([+]?[0-9\s-\(\)]{3,25})*$/i;
 
     if (nameInput.value != "" && nameRegExp.test(nameInput.value)) {
+        document.querySelector(".cart-main-form__invalid-name").style.display = "none";
         nameInput.style.borderBottom = "1px solid var(--system-grey);";
         order.recipient.name = nameInput.value;
     } else {
+        document.querySelector(".cart-main-form__invalid-name").style.display = "block";
         nameInput.style.borderBottom = "1px solid red";
         return;
     }
 
     if (surnameInput.value != "" && nameRegExp.test(surnameInput.value)) {
+        document.querySelector(".cart-main-form__invalid-surname").style.display = "none";
         surnameInput.style.borderBottom = "1px solid var(--system-grey);";
         order.recipient.surname = surnameInput.value;
     } else {
+        document.querySelector(".cart-main-form__invalid-surname").style.display = "block";
         surnameInput.style.borderBottom = "1px solid red";
         return;
     }
 
     if (emailInput.value != "" && emailRegExp.test(emailInput.value)) {
+        document.querySelector(".cart-main-form__invalid-email").style.display = "none";
         emailInput.style.borderBottom = "1px solid var(--system-grey);";
         order.recipient.eMail = emailInput.value;
     } else {
+        document.querySelector(".cart-main-form__invalid-email").style.display = "block";
         emailInput.style.borderBottom = "1px solid red";
         return;
     }
 
     if (phoneInput.value != "" && phoneRegExp.test(phoneInput.value)) {
+        document.querySelector(".cart-main-form__invalid-phone").style.display = "none";
         phoneInput.style.borderBottom = "1px solid var(--system-grey);";
         order.recipient.phone = phoneInput.value;
     } else {
+        document.querySelector(".cart-main-form__invalid-phone").style.display = "block";
         phoneInput.style.borderBottom = "1px solid red";
         return;
     }
@@ -233,13 +247,13 @@ sendOrderBtn.addEventListener("click", () => {
     console.log(order);
 })
 
-// логика открытия модалочек с информацией об обратной оплате
-document.querySelector(".showMainCartReturnDeliveryModal").addEventListener("click", () => {
-    document.querySelector(".cart-main-delivery-return-modal").classList.toggle("d-none");
-})
-document.querySelector(".showSidebarReturnDeliveryModal").addEventListener("click", () => {
-    document.querySelector(".main-sidebar-return-delivery-modal").classList.toggle("d-none");
-})
+// // логика открытия модалочек с информацией об обратной оплате
+// document.querySelector(".showMainCartReturnDeliveryModal").addEventListener("click", () => {
+//     document.querySelector(".cart-main-delivery-return-modal").classList.toggle("d-none");
+// })
+// document.querySelector(".showSidebarReturnDeliveryModal").addEventListener("click", () => {
+//     document.querySelector(".main-sidebar-return-delivery-modal").classList.toggle("d-none");
+// })
 
 // обработчики открытия модалок
 document.querySelector(".cart-main-delivery__options-btn").addEventListener("click", () => {

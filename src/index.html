@@ -85,6 +85,7 @@
                     <p>Профиль</p>
                 </a>
                 <a href="#" class="header__nav--cart-link header__nav--item">
+                    <span class="header-nav__cart-counter d-flex jc-center ai-center"></span>
                     <svg xmlns="http://www.w3.org/2000/svg" width="28" height="29" viewBox="0 0 28 29" fill="none"
                         class="header__nav__icon">
                         <path fill-rule="evenodd" clip-rule="evenodd"
@@ -251,18 +252,22 @@
                         <div class="cart-main-form-placeholder-wrapper cart-main-form-placeholder-wrapper--50per">
                             <input type="text" class="cart-main-form__input cart-main-form__name" placeholder=" ">
                             <span class="cart-main-form__placeholder">Имя</span>
+                            <p class="cart-main-form__invalid cart-main-form__invalid-name">Укажите имя</p>
                         </div>
                         <div class="cart-main-form-placeholder-wrapper cart-main-form-placeholder-wrapper--50per">
                             <input type="text" class="cart-main-form__input cart-main-form__surname" placeholder=" ">
                             <span class="cart-main-form__placeholder">Фамилия</span>
+                            <p class="cart-main-form__invalid cart-main-form__invalid-surname">Укажите фамилию</p>
                         </div>
                         <div class="cart-main-form-placeholder-wrapper">
                             <input type="text" class="cart-main-form__input cart-main-form__email" placeholder=" ">
                             <span class="cart-main-form__placeholder">Почта</span>
+                            <p class="cart-main-form__invalid cart-main-form__invalid-email">Укажите почту</p>
                         </div>
                         <div class="cart-main-form-placeholder-wrapper">
                             <input type="text" class="cart-main-form__input cart-main-form__phone" placeholder=" ">
                             <span class="cart-main-form__placeholder">Телефон</span>
+                            <p class="cart-main-form__invalid cart-main-form__invalid-phone">Укажите телефон</p>
                         </div>
                         <div class="cart-main-form-placeholder-wrapper">
                             <input type="text" class="cart-main-form__input cart-main-form__inn" placeholder=" ">
@@ -319,8 +324,8 @@
                         <p class="main-sidebar-return-delivery__info">Обратная доставка товаров на склад при отказе -
                             <span class="showSidebarReturnDeliveryModal cursor-pointer">бесплатно</span>
                         </p>
-                        <div class="main-sidebar-return-delivery-modal d-none">Если товары вам не подойдут, мы вернем
-                            их обратно на склад — это бесплатно</div>
+                        <p class="main-sidebar-return-delivery-modal">Если товары вам не подойдут, мы вернем
+                            их обратно на склад — это бесплатно</p>
                     </div>
                 </div>
                 <div class="main-sidebar-payment">
