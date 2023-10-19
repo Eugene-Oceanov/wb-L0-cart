@@ -37,4 +37,15 @@ module.exports = {
             controlVar = "invalid";
         }
     },
+
+    openModal: function(modal, overlay) {
+        overlay.style.display = "flex";
+        modal.style.display = "block";
+    },
+
+    closeModal: function (payment, delivery, overlay) {
+        payment.style.display = "none";
+        delivery.style.display = "none";
+        overlay.style.display = "none";
+    }
 }
