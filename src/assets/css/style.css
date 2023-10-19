@@ -407,6 +407,10 @@ input[type=radio]:checked+.radio-label .pseudo-radio {
   white-space: nowrap;
 }
 
+.cart-aviable__hide-block-svg {
+  transition: .3s ease;
+}
+
 /* cart item start */
 .cart-item__checkbox {
   display: block;
@@ -846,7 +850,8 @@ input[type=radio]:checked+.radio-label .pseudo-radio {
   line-height: .8em;
 }
 
-.main-sidebar-return-delivery__info span {
+.show-sidebar-return-delivery-modal {
+  display: block;
   font-size: 1em;
   color: #0CB477;
   border-bottom: 1px dashed #0CB477;
@@ -867,7 +872,7 @@ input[type=radio]:checked+.radio-label .pseudo-radio {
   box-shadow: 0px 0px 1px 0px rgba(0, 0, 0, 0.30), 0px 2px 10px 0px rgba(0, 0, 0, 0.15);
 }
 
-.main-sidebar-return-delivery__info span:hover+.main-sidebar-return-delivery-modal {
+.show-sidebar-return-delivery-modal:hover+.main-sidebar-return-delivery-modal {
   display: block;
 }
 

@@ -85,6 +85,10 @@ module.exports = {
         return cartItemNotAviable1;
     },
     // ==================================================================================================================================
+    deliveryDateItem: function(item) {
+        const
+    },
+    // ==================================================================================================================================
     paySystemItem: function (item, counter) {
         const paySystemItem = document.createElement("DIV");
         paySystemItem.classList.add("payment-modal-item", "modal-item");

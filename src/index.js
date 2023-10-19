@@ -28,24 +28,26 @@ const order = {
     goods: [],
     payInfo: {
         postpaid: false
-    }
+    },
 }
 
 // окончательные показатели
 let totalPriceSum,
     totalOriginalPrice,
-    totalQuantitySum,
-    totalDiscountSum = 0;
+    totalQuantitySum, ;
+totalDiscountSum = 0;
 
 // перебор массива товаров из api корзины, добавление, удаление, изменение количества товаров в заказе 
 cartFuncs.getData("https://raw.githubusercontent.com/Eugene-Oceanov/wb-L0-cart/main/src/json/cart-api.json").then(data => {
     data.forEach(item => {
         if (item.remainder > 0) { // здесь вся логика, касающаяся товаров, доступных к заказу
             order.goods.push(item); // поскольку чекбоксы заранее в положении checked, сразу добавляем эти товары в заказ
+            headerCounter.textContent = order.goods.length;
+            getTotals(order.goods);
             let orderGood = order.goods[order.goods.indexOf(item)]; //Переменная, которая обращается к элементу заказа, который является именно этим объектом
             const cartItem = layouts.fullCartItem(item); // отрисовываем верстку товаров корзины доступных к заказу
             document.querySelector(".cart-aviable__container").append(cartItem);
-            cartItem.querySelector(".cartItemCheckbox").addEventListener("change", (e) => { // логика добавления товаров в заказ по нажатию на чекбоксы
+            cartItem.querySelector(".cartItemCheckbox").addEventListener("change", (e) => { // логика добавления/удаления товаров в заказе по нажатию на чекбоксы
                 if (e.target.checked) {
                     order.goods.push(item);
                     headerCounter.textContent = order.goods.length;
@@ -67,7 +69,7 @@ cartFuncs.getData("https://raw.githubusercontent.com/Eugene-Oceanov/wb-L0-cart/m
                     orderGood.quantity--;
                     orderGood.remainder++;
                     quantityValue.textContent = orderGood.quantity;
-                    itemFinalPrice.textContent = ((Math.round(orderGood.price - (orderGood.price / 100 * orderGood.discount))) * orderGood.quantity)
+                    itemFinalPrice.textContent = ((Math.round(orderGood.price - (orderGood.price / 100 * orderGood.discount))) * orderGood.quantity);
                     itemOriginalPrice.textContent = (item.price * item.quantity).toLocaleString("ru");
                     if (quantityRemainder) quantityRemainder.textContent = orderGood.remainder;
                     getTotals(order.goods);
@@ -78,7 +80,7 @@ cartFuncs.getData("https://raw.githubusercontent.com/Eugene-Oceanov/wb-L0-cart/m
                     orderGood.quantity++;
                     orderGood.remainder--;
                     quantityValue.textContent = orderGood.quantity;
-                    itemFinalPrice.textContent = ((Math.round(orderGood.price - (orderGood.price / 100 * orderGood.discount))) * orderGood.quantity)
+                    itemFinalPrice.textContent = ((Math.round(orderGood.price - (orderGood.price / 100 * orderGood.discount))) * orderGood.quantity);
                     itemOriginalPrice.textContent = (item.price * item.quantity).toLocaleString("ru");
                     if (quantityRemainder) quantityRemainder.textContent = orderGood.remainder;
                     getTotals(order.goods);
@@ -86,11 +88,9 @@ cartFuncs.getData("https://raw.githubusercontent.com/Eugene-Oceanov/wb-L0-cart/m
             })
         } else if (item.remainder === 0) { // отрисовываем верстку товаров корзины НЕ доступных к заказу
             const cartItemNotAviable = layouts.cartItemNotAviable(item);
-            document.querySelector(".cart-not-aviable__container").append(cartItemNotAviable)
+            document.querySelector(".cart-not-aviable__container").append(cartItemNotAviable);
         }
     })
-    headerCounter.textContent = order.goods.length;
-    getTotals(order.goods);
 });
 
 // логика обработки данных пользователя
@@ -172,25 +172,30 @@ sendOrderBtn.addEventListener("click", () => {
     if (controlValidation != "invalid") {
         console.log("Заказ отправлены");
         console.log(order);
-    } else return
+    } else return;
 })
 
 // обработчики открытия модалок
-document.querySelector(".cart-main-delivery__options-btn").addEventListener("click", () => {
-    overlay.style.display = "flex";
-    deliveryModal.style.display = "block";
-})
-document.querySelector(".cart-main-payment__options-btn").addEventListener("click", () => {
-    overlay.style.display = "flex";
-    paymentModal.style.display = "block";
-})
+document.querySelector(".cart-main-delivery__options-btn").addEventListener("click", () => cartFuncs.openModal(deliveryModal, overlay));
+document.querySelector(".cart-main-payment__options-btn").addEventListener("click", () => cartFuncs.openModal(paymentModal, overlay));
+document.querySelector(".main-sidebar__open-delivery-modal").addEventListener("click", () => cartFuncs.openModal(deliveryModal, overlay));
+document.querySelector(".main-sidebar__open-payment-modal").addEventListener("click", () => cartFuncs.openModal(paymentModal, overlay));
 
 // обработчики закрытия модалок
-overlay.addEventListener("click", (e) => {
-    if (e.target === overlay) closeModal()
-});
-document.querySelector(".close-payment-modal").addEventListener("click", () => closeModal());
-document.querySelector(".close-delivery-modal").addEventListener("click", () => closeModal());
+overlay.addEventListener("click", (e) => { if (e.target === overlay) cartFuncs.closeModal(paymentModal, deliveryModal, overlay) });
+document.querySelector(".close-payment-modal").addEventListener("click", () => cartFuncs.closeModal(paymentModal, deliveryModal, overlay));
+document.querySelector(".close-delivery-modal").addEventListener("click", () => cartFuncs.closeModal(paymentModal, deliveryModal, overlay));
+
+// обработчики скрытия блоков корзины
+document.querySelector(".cart-aviable__hide-block-svg").addEventListener("click", (e) => {
+    document.querySelector(".cart-aviable__container").classList.toggle = "d-none";
+    e.target.style.transform = "rotate(180deg)";
+})
+document.querySelector(".cart-not-aviable__hide-block-svg").addEventListener("click", (e) => {
+    document.querySelector(".cart-not-aviable__container").classList.toggle = "d-none";
+    e.target.style.transform = "rotate(180deg)";
+})
+
 
 // функция, которая пересчитывает финальные показатели (общая цена, скидка, количество и тд) и записывает их в сайдбар 
 function getTotals(arr) {
@@ -211,11 +216,4 @@ function getTotals(arr) {
     document.querySelector(".goodsQuantity").textContent = `${totalQuantitySum.toLocaleString("ru")} товара`;
     document.querySelector(".originalPrice").textContent = totalOriginalPrice.toLocaleString("ru");
     document.querySelector(".totalDiscount").textContent = totalDiscountSum.toLocaleString("ru");
-}
-
-// функция закрытия модалок
-function closeModal() {
-    paymentModal.style.display = "none";
-    deliveryModal.style.display = "none";
-    overlay.style.display = "none";
 }
