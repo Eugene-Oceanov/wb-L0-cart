@@ -34,8 +34,8 @@ const order = {
 // окончательные показатели
 let totalPriceSum,
     totalOriginalPrice,
-    totalQuantitySum, ;
-totalDiscountSum = 0;
+    totalQuantitySum,
+    totalDiscountSum = 0;
 
 // перебор массива товаров из api корзины, добавление, удаление, изменение количества товаров в заказе 
 cartFuncs.getData("https://raw.githubusercontent.com/Eugene-Oceanov/wb-L0-cart/main/src/json/cart-api.json").then(data => {
@@ -45,7 +45,10 @@ cartFuncs.getData("https://raw.githubusercontent.com/Eugene-Oceanov/wb-L0-cart/m
             headerCounter.textContent = order.goods.length;
             getTotals(order.goods);
             let orderGood = order.goods[order.goods.indexOf(item)]; //Переменная, которая обращается к элементу заказа, который является именно этим объектом
-            const cartItem = layouts.fullCartItem(item); // отрисовываем верстку товаров корзины доступных к заказу
+
+            let cartItem = null;
+            window.innerWidth > 400 ? cartItem = layouts.fullCartItem(item) : cartItem = layouts.fullCartItemMob(item)
+
             document.querySelector(".cart-aviable__container").append(cartItem);
             cartItem.querySelector(".cartItemCheckbox").addEventListener("change", (e) => { // логика добавления/удаления товаров в заказе по нажатию на чекбоксы
                 if (e.target.checked) {
@@ -69,7 +72,7 @@ cartFuncs.getData("https://raw.githubusercontent.com/Eugene-Oceanov/wb-L0-cart/m
                     orderGood.quantity--;
                     orderGood.remainder++;
                     quantityValue.textContent = orderGood.quantity;
-                    itemFinalPrice.textContent = ((Math.round(orderGood.price - (orderGood.price / 100 * orderGood.discount))) * orderGood.quantity);
+                    itemFinalPrice.textContent = ((Math.round(orderGood.price - (orderGood.price / 100 * orderGood.discount))) * orderGood.quantity).toLocaleString("ru");
                     itemOriginalPrice.textContent = (item.price * item.quantity).toLocaleString("ru");
                     if (quantityRemainder) quantityRemainder.textContent = orderGood.remainder;
                     getTotals(order.goods);
@@ -87,7 +90,8 @@ cartFuncs.getData("https://raw.githubusercontent.com/Eugene-Oceanov/wb-L0-cart/m
                 } else return;
             })
         } else if (item.remainder === 0) { // отрисовываем верстку товаров корзины НЕ доступных к заказу
-            const cartItemNotAviable = layouts.cartItemNotAviable(item);
+            let cartItemNotAviable = null;
+            window.innerWidth > 400 ? cartItemNotAviable = layouts.fullCartItem(item) : cartItemNotAviable = layouts.cartItemNotAviableMob(item);
             document.querySelector(".cart-not-aviable__container").append(cartItemNotAviable);
         }
     })
@@ -188,8 +192,8 @@ document.querySelector(".close-delivery-modal").addEventListener("click", () => 
 
 // обработчики скрытия блоков корзины
 document.querySelector(".cart-aviable__hide-block-svg").addEventListener("click", (e) => {
-    document.querySelector(".cart-aviable__container").classList.toggle = "d-none";
-    e.target.style.transform = "rotate(180deg)";
+    document.querySelector(".cart-aviable__container").classList.toggle("d-none");
+    // e.target.style.transform = "rotate(180deg)";
 })
 document.querySelector(".cart-not-aviable__hide-block-svg").addEventListener("click", (e) => {
     document.querySelector(".cart-not-aviable__container").classList.toggle = "d-none";

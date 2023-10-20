@@ -26,7 +26,7 @@ module.exports = {
         return newString.join("");
     },
 
-    validateInput: function(regExp, input, errorOutput, objectVar, controlVar) {
+    validateInput: function (regExp, input, errorOutput, objectVar, controlVar) {
         if (input.value != "" && regExp.test(input.value)) {
             errorOutput.style.display = "none";
             input.style.borderBottom = "1px solid var(--system-grey);";
@@ -38,7 +38,7 @@ module.exports = {
         }
     },
 
-    openModal: function(modal, overlay) {
+    openModal: function (modal, overlay) {
         overlay.style.display = "flex";
         modal.style.display = "block";
     },
@@ -47,5 +47,10 @@ module.exports = {
         payment.style.display = "none";
         delivery.style.display = "none";
         overlay.style.display = "none";
+    },
+
+    concatString: function (str) {
+        if (str.length > 50) return str.slice(0, 55) + "...";
+        else return str;
     }
 }
