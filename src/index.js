@@ -199,7 +199,7 @@ document.querySelector(".cart-not-aviable__hide-block-svg").addEventListener("cl
     document.querySelector(".cart-not-aviable__container").classList.toggle = "d-none";
     e.target.style.transform = "rotate(180deg)";
 })
-
+// paySystemIcon
 
 // функция, которая пересчитывает финальные показатели (общая цена, скидка, количество и тд) и записывает их в сайдбар 
 function getTotals(arr) {

@@ -1597,4 +1597,59 @@ input[type=radio]:checked+.radio-label .pseudo-radio {
     font-size: 1em;
     line-height: 1.1em;
   }
+
+  .modal {
+    width: 100%;
+    height: 100%;
+    padding: 1.5em 1.3em;
+    border-radius: 0;
+  }
+
+
+
+  .payment-modal-title-wrapper {
+    margin-bottom: 1.5em;
+  }
+
+  .modal__title {
+    font-size: 1.5em;
+    line-height: 1.5em;
+  }
+
+  .radio-label .pseudo-radio {
+    margin-right: 1em;
+    width: 1.3em;
+    height: 1.3em;
+  }
+
+  input[type=radio]:checked+.radio-label .pseudo-radio {
+    border: .4em solid var(--system-magenta);
+  }
+
+  .modal label {
+    font-size: 1.3em;
+    line-height: 1.3em;
+  }
+
+  .modal__btn {
+    width: 90%;
+    margin: 0 auto;
+    padding: 1em 0;
+    font-size: 1.4em;
+  }
+
+  .payment-modal-item+.payment-modal-item {
+    margin-top: 2em !important;
+  }
+
+  .delivery-modal__way-item {
+    font-size: 1.2em;
+    line-height: 1em;
+    padding: .8em 0;
+  }
+
+  .delivery-modal__heading {
+    font-size: 1.3em;
+    line-height: 1.3em;
+  }
 }
