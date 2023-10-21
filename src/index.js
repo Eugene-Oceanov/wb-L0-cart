@@ -217,7 +217,7 @@ function getTotals(arr) {
     })
     // передаем переопределенные показатели в ноды
     document.querySelector(".totalPrice").textContent = totalPriceSum.toLocaleString("ru");
-    document.querySelector(".goodsQuantity").textContent = `${totalQuantitySum.toLocaleString("ru")} товара`;
+    document.querySelector(".goodsQuantity").textContent = `${totalQuantitySum.toLocaleString("ru")} ${cartFuncs.nounGoods(totalQuantitySum)}`;
     document.querySelector(".originalPrice").textContent = totalOriginalPrice.toLocaleString("ru");
     document.querySelector(".totalDiscount").textContent = totalDiscountSum.toLocaleString("ru");
 }

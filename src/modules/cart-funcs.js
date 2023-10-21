@@ -43,6 +43,20 @@ module.exports = {
         modal.style.display = "block";
     },
 
+    nounGoods: function (count) {
+        let str = count.toString();
+        let lastCount = str[str.length - 1]
+        if (lastCount === "1") {
+            if (str[str.length - 2] === "1") return "товаров";
+            else return "товар"
+        }
+        if (lastCount === "2" || lastCount === "3" || lastCount === "4") {
+            if (str[str.length - 2] === "1") return "товаров";
+            else return "товара"
+        }
+        if (lastCount === "0" || lastCount === "5" || lastCount === "6" || lastCount === "7" || lastCount === "8" || lastCount === "9") return "товаров"
+    },
+
     closeModal: function (payment, delivery, overlay) {
         payment.style.display = "none";
         delivery.style.display = "none";
